@@ -1,34 +1,51 @@
 <script setup lang="ts">
 import { isDark } from '~/logics'
+
+function toTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
+const { y: scroll } = useWindowScroll()
 </script>
 
 <template>
   <header class="header z-40">
-    <router-link
-      class="w-10 h-10 absolute lg:fixed m-6 select-none outline-none"
+    <RouterLink
+      class="w-12 h-12 absolute xl:fixed m-5 select-none outline-none"
       to="/"
       focusable="false"
     >
       <img v-show="isDark" src="/logo-dark.svg?url" alt="logo">
       <img v-show="!isDark" src="/logo.svg?url" alt="logo">
-    </router-link>
+    </RouterLink>
+    <button
+      title="Scroll to top"
+      fixed right-3 bottom-3 w-10 h-10 hover:op100 rounded-full
+      hover-bg-hex-8883 transition duration-300 z-100 print:hidden
+      :class="scroll > 300 ? 'op30' : 'op0! pointer-events-none'"
+      @click="toTop()"
+    >
+      <div i-ri-arrow-up-line />
+    </button>
     <nav class="nav">
       <div class="spacer" />
-      <div class="right">
-        <router-link to="/posts" title="Blog">
+      <div class="right" print:op0>
+        <RouterLink to="/posts" title="Blog">
           <span class="lt-md:hidden">Blog</span>
           <div i-ri-article-line md:hidden />
-        </router-link>
+        </RouterLink>
         <!-- <router-link to="/projects" title="Projects">
           <span class="lt-md:hidden">Projects</span>
           <div i-ri-lightbulb-line class="md:hidden" />
         </router-link> -->
-        <router-link to="/notes" class="lt-md:hidden" title="Notes">
+        <RouterLink to="/notes" class="lt-md:hidden" title="Notes">
           Notes
-        </router-link>
-        <router-link to="/bookmarks" title="Bookmarks">
+        </RouterLink>
+        <RouterLink to="/bookmarks" title="Bookmarks">
           <div i-ri-bookmark-line />
-        </router-link>
+        </RouterLink>
         <!-- <router-link to="/notes" title="Notes">
           <div i-ri-sticky-note-line />
         </router-link> -->
