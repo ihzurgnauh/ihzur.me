@@ -1,4 +1,4 @@
-import { defineConfig, presetAttributify, presetIcons, presetUno, presetWebFonts } from 'unocss'
+import { defineConfig, presetAttributify, presetIcons, presetUno, presetWebFonts, transformerDirectives } from 'unocss'
 
 export default defineConfig({
   shortcuts: [
@@ -6,6 +6,7 @@ export default defineConfig({
       'bg-base': 'bg-white dark:bg-black',
       'border-base': 'border-[#8884]',
     },
+    [/^btn-(\w+)$/, ([_, color]) => `op50 px2.5 py1 transition-all duration-200 ease-out no-underline! hover:(op100 text-${color} bg-${color}/10) border border-base! rounded`],
   ],
   rules: [
     [/^slide-enter-(\d+)$/, ([_, n]) => ({
@@ -29,5 +30,11 @@ export default defineConfig({
         mono: 'DM Mono:400,600',
       },
     }),
+  ],
+  transformers: [
+    transformerDirectives(),
+  ],
+  safelist: [
+    'i-ri-menu-2-fill',
   ],
 })
