@@ -1,7 +1,7 @@
 ---
 title: Bookmarks - ihzurgnauh
 display: Bookmarks
-subtitle: 记录一些有趣的网站
+subtitle: 书签
 ---
 
-Not yet
+这里还没有任何东西👻

@@ -19,7 +19,6 @@ const routes: Post[] = router.getRoutes()
     date: i.meta.frontmatter.date,
     lang: i.meta.frontmatter.lang,
     duration: i.meta.frontmatter.duration,
-    recording: i.meta.frontmatter.recording,
     upcoming: i.meta.frontmatter.upcoming,
     redirect: i.meta.frontmatter.redirect,
   }))
@@ -48,7 +47,7 @@ function getGroupName(p: Post) {
   <ul>
     <template v-if="!posts.length">
       <div py2 op50>
-        { nothing here yet }
+        { 这里还没有任何东西👻 }
       </div>
     </template>
 
@@ -99,24 +98,6 @@ function getGroupName(p: Post) {
                 align-middle op50 flex-none text-xs ml--1 mt--1
                 i-carbon-arrow-up-right
                 title="External"
-              />
-              <span
-                v-if="route.inperson"
-                align-middle op50 flex-none
-                i-ri:group-2-line
-                title="In person"
-              />
-              <span
-                v-if="route.recording || route.video"
-                align-middle op50 flex-none
-                i-ri:film-line
-                title="Provided in video"
-              />
-              <span
-                v-if="route.radio"
-                align-middle op50 flex-none
-                i-ri:radio-line
-                title="Provided in radio"
               />
 
               <span text-sm op50 ws-nowrap>

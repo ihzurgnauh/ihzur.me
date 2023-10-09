@@ -1,4 +1,5 @@
 import { basename, dirname, resolve } from 'node:path'
+import { Buffer } from 'node:buffer'
 import { defineConfig } from 'vite'
 import fs from 'fs-extra'
 import Pages from 'vite-plugin-pages'
@@ -6,15 +7,15 @@ import Inspect from 'vite-plugin-inspect'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
-import Markdown from 'vite-plugin-vue-markdown'
+import Markdown from 'unplugin-vue-markdown/vite'
 import Vue from '@vitejs/plugin-vue'
-import Shiki from 'markdown-it-shiki'
 import matter from 'gray-matter'
 import AutoImport from 'unplugin-auto-import/vite'
 import anchor from 'markdown-it-anchor'
 import LinkAttributes from 'markdown-it-link-attributes'
 import UnoCSS from 'unocss/vite'
 import SVG from 'vite-svg-loader'
+import { bundledLanguages, getHighlighter } from 'shikiji'
 
 // @ts-expect-error missing types
 import TOC from 'markdown-it-table-of-contents'
@@ -67,9 +68,7 @@ export default defineConfig({
     }),
 
     Markdown({
-      wrapperComponent: id => id.includes('/demo/')
-        ? 'WrapperDemo'
-        : 'WrapperPost',
+      wrapperComponent: 'WrapperPost',
       wrapperClasses: (id, code) => code.includes('@layout-full-width')
         ? ''
         : 'prose m-auto slide-enter-content',
@@ -80,12 +79,23 @@ export default defineConfig({
       markdownItOptions: {
         quotes: '""\'\'',
       },
-      markdownItSetup(md) {
-        md.use(Shiki, {
-          theme: {
-            light: 'vitesse-light',
-            dark: 'vitesse-dark',
-          },
+      async markdownItSetup(md) {
+        const shiki = await getHighlighter({
+          themes: ['vitesse-dark', 'vitesse-light'],
+          langs: Object.keys(bundledLanguages) as any,
+        })
+
+        md.use((markdown) => {
+          markdown.options.highlight = (code, lang) => {
+            return shiki.codeToHtml(code, {
+              lang,
+              themes: {
+                light: 'vitesse-light',
+                dark: 'vitesse-dark',
+              },
+              cssVariablePrefix: '--s-',
+            })
+          }
         })
         md.use(anchor, {
           slugify,
@@ -122,7 +132,7 @@ export default defineConfig({
               ? fs.copy(`${id.slice(0, -3)}.png`, `public/${path}`)
               : generateOg(frontmatter.title!.replace(/\s-\s.*$/, '').trim(), `public/${path}`),
           )
-          frontmatter.image = `https://antfu.me/${path}`
+          frontmatter.image = `https://ihzurgnauh.github.io/${path}`
         })()
         const head = defaults(frontmatter, options)
         return { head, frontmatter }
@@ -184,7 +194,7 @@ export default defineConfig({
   },
 })
 
-const ogSVg = fs.readFileSync('./scripts/og-template.svg', 'utf-8')
+// const ogSVg = fs.readFileSync('./scripts/og-template.svg', 'utf-8')
 
 async function generateOg(title: string, output: string) {
   if (fs.existsSync(output))
@@ -192,14 +202,14 @@ async function generateOg(title: string, output: string) {
 
   await fs.mkdir(dirname(output), { recursive: true })
   // breakline every 25 chars
-  const lines = title.trim().split(/(.{0,25})(?:\s|$)/g).filter(Boolean)
+  // const lines = title.trim().split(/(.{0,25})(?:\s|$)/g).filter(Boolean)
 
-  const data: Record<string, string> = {
-    line1: lines[0],
-    line2: lines[1],
-    line3: lines[2],
-  }
-  const svg = ogSVg.replace(/\{\{([^}]+)}}/g, (_, name) => data[name] || '')
+  // const data: Record<string, string> = {
+  //   line1: lines[0],
+  //   line2: lines[1],
+  //   line3: lines[2],
+  // }
+  // const svg = ogSVg.replace(/\{\{([^}]+)}}/g, (_, name) => data[name] || '')
 
   // eslint-disable-next-line no-console
   console.log(`Generating ${output}`)
