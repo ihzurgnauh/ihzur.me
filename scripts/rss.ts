@@ -30,7 +30,7 @@ async function buildBlogRSS() {
     description: 'ihzurgnauh\' Blog',
     id: 'https://ihzurgnauh.github.io',
     link: 'https://ihzurgnauh.github.io',
-    copyright: 'CC BY-NC-SA 4.0 2021 © ihzurgnauh',
+    copyright: 'CC BY-NC-SA 4.0 2023 © ihzurgnauh',
     feedLinks: {
       json: 'https://ihzurgnauh.github.io/feed.json',
       atom: 'https://ihzurgnauh.github.io/feed.atom',
