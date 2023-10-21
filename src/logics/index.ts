@@ -57,3 +57,22 @@ export function formatDate(d: string | Date, onlyDate = true) {
     return date.format('MMM D')
   return date.format('MMM D, YYYY')
 }
+
+export function getSeason(d: string | Date) {
+  const date = dayjs(d)
+  const monthToSeasonMap = new Map([
+    [3, '初春'],
+    [4, '仲春'],
+    [5, '暮春'],
+    [6, '初夏'],
+    [7, '仲夏'],
+    [8, '季夏'],
+    [9, '初秋'],
+    [10, '仲秋'],
+    [11, '深秋'],
+    [12, '初冬'],
+    [1, '仲冬'],
+    [2, '季冬'],
+  ])
+  return monthToSeasonMap.get(date.month() + 1)
+}

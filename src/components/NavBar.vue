@@ -48,7 +48,7 @@ const { y: scroll } = useWindowScroll()
         <a href="https://github.com/ihzurgnauh" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-uil-github-alt />
         </a>
-        <a href="mailto:zhiruhuang7@gmail.com" target="_blank" title="GitHub" class="lt-md:hidden">
+        <a href="mailto:zhiruhuang7@gmail.com" target="_blank" title="Email" class="lt-md:hidden">
           <div i-material-symbols-mail-outline-rounded />
         </a>
         <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
