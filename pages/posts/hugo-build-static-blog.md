@@ -38,7 +38,7 @@ cd blogDemo # 进入blogDemo目录
 
 ## 安装主题
 
-Hugo的官网[主题](https://themes.gohugo.io/)种类很多，基本能满足各类需求，安装只需把对应的主题clone到themes目录，具体的主题配置参考其文档即可，本站使用的是even主题。
+Hugo的官网[主题](https://themes.gohugo.io/)种类很多，基本能满足各类需求，安装只需把对应的主题clone到themes目录，具体的主题配置参考其文档即可，下面就以[even主题](https://github.com/olOwOlo/hugo-theme-even)为例。
 
 ```bash
 git clone https://github.com/olOwOlo/hugo-theme-even.git
@@ -52,7 +52,7 @@ git clone https://github.com/olOwOlo/hugo-theme-even.git
 hugo server # 启动本地调试服务
 ```
 
-至此就可以在contect下的post目录中添加文章，进行创作记录了。
+至此就可以在content下的post目录中添加文章，进行创作记录了。
 
 ```bash
 hugo new post/demo.md
