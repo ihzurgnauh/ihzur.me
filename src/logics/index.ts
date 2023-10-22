@@ -40,7 +40,7 @@ export function toggleDark(event: MouseEvent) {
             : clipPath,
         },
         {
-          duration: 400,
+          duration: 700,
           easing: 'ease-out',
           pseudoElement: isDark.value
             ? '::view-transition-old(root)'
