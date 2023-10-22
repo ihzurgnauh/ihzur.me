@@ -87,11 +87,16 @@ onMounted(() => {
       v-if="frontmatter.date"
       class="opacity-50 !-mt-6 slide-enter-50"
     >
+      <i i-material-symbols-calendar-month-outline />
       {{ formatDate(frontmatter.date, false) }}
-      <span v-if="frontmatter.duration">· {{ frontmatter.duration }} </span>
-
-      <span class="pl-4">{{ dateToSeason(frontmatter.date) }}</span>
-      <span i-noto-bookmark />
+      <span v-if="frontmatter.duration" class="pl-4">
+        <i i-ant-design-read-outlined />
+        {{ frontmatter.duration }}
+      </span>
+      <span class="pl-4">
+        <i i-noto-bookmark />
+        {{ dateToSeason(frontmatter.date) }}
+      </span>
     </p>
     <p
       v-if="frontmatter.subtitle"
