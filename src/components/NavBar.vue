@@ -34,7 +34,7 @@ const { y: scroll } = useWindowScroll()
       <div class="right" print:op0>
         <RouterLink to="/posts" title="Blog">
           <span class="lt-md:hidden">Blog</span>
-          <div i-ri-article-line md:hidden />
+          <div i-line-md-text-box md:hidden />
         </RouterLink>
         <RouterLink to="/notes" class="lt-md:hidden" title="Notes">
           Notes
@@ -46,13 +46,13 @@ const { y: scroll } = useWindowScroll()
           <div i-ri-sticky-note-line />
         </router-link> -->
         <a href="https://github.com/ihzurgnauh" target="_blank" title="GitHub" class="lt-md:hidden">
-          <div i-uil-github-alt />
+          <div i-line-md-github />
         </a>
-        <a href="mailto:zhiruhuang7@gmail.com" target="_blank" title="Email" class="lt-md:hidden">
-          <div i-material-symbols-mail-outline-rounded />
+        <a href="mailto:zhiruhuang7@gmail.com" target="_blank" title="Email">
+          <div i-line-md-email />
         </a>
         <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
-          <div i-la-rss-square style="font-size:1.25rem; margin: 0 -0.125rem;" />
+          <div i-ic-sharp-rss-feed />
         </a>
         <toggle-theme />
       </div>
