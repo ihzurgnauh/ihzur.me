@@ -40,7 +40,7 @@ const { y: scroll } = useWindowScroll()
           Notes
         </RouterLink>
         <RouterLink to="/bookmarks" title="Bookmarks">
-          <div i-ri-bookmark-line />
+          <div i-material-symbols-bookmarks-outline />
         </RouterLink>
         <!-- <router-link to="/notes" title="Notes">
           <div i-ri-sticky-note-line />

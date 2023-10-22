@@ -35,7 +35,7 @@ export default defineConfig({
     transformerDirectives(),
   ],
   safelist: [
-    'i-ri-menu-2-fill',
-    'i-solar-menu-dots-broken',
+    'i-line-md-align-left',
+    'i-line-md-hash-small',
   ],
 })

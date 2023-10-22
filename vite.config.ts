@@ -116,7 +116,7 @@ export default defineConfig({
         md.use(TOC, {
           includeLevel: [1, 2, 3, 4],
           slugify,
-          containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-ri-menu-2-fill" /></div>',
+          containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-line-md-align-left" /></div>',
         })
       },
       frontmatterPreprocess(frontmatter, options, id, defaults) {

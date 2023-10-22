@@ -4,6 +4,6 @@ import { toggleDark } from '~/logics'
 
 <template>
   <a class="select-none" title="Toggle Color Scheme" @click="toggleDark">
-    <div i-line-md-moon-filled-to-sunny-filled-transition dark:i-line-md-sunny-filled-loop-to-moon-filled-transition />
+    <div i-line-md-moon-to-sunny-outline-transition dark:i-line-md-sunny-outline-to-moon-transition />
   </a>
 </template>
