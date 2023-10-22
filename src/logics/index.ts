@@ -1,4 +1,7 @@
 import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+
+dayjs.locale('zh-cn')
 
 export const isDark = useDark()
 
@@ -40,7 +43,7 @@ export function toggleDark(event: MouseEvent) {
             : clipPath,
         },
         {
-          duration: 700,
+          duration: 420,
           easing: 'ease-out',
           pseudoElement: isDark.value
             ? '::view-transition-old(root)'
@@ -53,8 +56,8 @@ export function toggleDark(event: MouseEvent) {
 export function formatDate(d: string | Date, onlyDate = true) {
   const date = dayjs(d)
   if (onlyDate || date.year() === dayjs().year())
-    return date.format('MMM D')
-  return date.format('MMM D, YYYY')
+    return date.format('M月DD日 HH:mm')
+  return date.format('LL')
 }
 
 export function dateToSeason(d: string | Date) {
