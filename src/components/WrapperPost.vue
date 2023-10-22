@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { formatDate, getSeason } from '~/logics'
+import { dateToSeason, formatDate } from '~/logics'
 
 const { frontmatter } = defineProps({
   frontmatter: {
@@ -90,7 +90,7 @@ onMounted(() => {
       {{ formatDate(frontmatter.date, false) }}
       <span v-if="frontmatter.duration">· {{ frontmatter.duration }} </span>
 
-      <span class="pl-4">{{ getSeason(frontmatter.date) }}</span>
+      <span class="pl-4">{{ dateToSeason(frontmatter.date) }}</span>
       <span i-noto-bookmark />
     </p>
     <p

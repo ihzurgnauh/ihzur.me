@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 
 export const isDark = useDark()
-export const englishOnly = useStorage('english-only', false)
 
 /**
  * Credit to [@hooray](https://github.com/hooray)
@@ -58,7 +57,7 @@ export function formatDate(d: string | Date, onlyDate = true) {
   return date.format('MMM D, YYYY')
 }
 
-export function getSeason(d: string | Date) {
+export function dateToSeason(d: string | Date) {
   const date = dayjs(d)
   const monthToSeasonMap = new Map([
     [3, '初春'],

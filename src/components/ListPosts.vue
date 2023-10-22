@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { englishOnly, formatDate } from '~/logics'
+import { formatDate } from '~/logics'
 import type { Post } from '~/types'
 
 const props = defineProps<{
@@ -25,8 +25,7 @@ const routes: Post[] = router.getRoutes()
 
 const posts = computed(() =>
   [...(props.posts || routes), ...props.extra || []]
-    .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-    .filter(i => !englishOnly.value || i.lang !== 'zh'),
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date)),
 )
 
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
