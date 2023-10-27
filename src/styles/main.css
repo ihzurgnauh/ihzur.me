@@ -5,7 +5,6 @@
 }
 
 html {
-  font-size: 102%;
   background-color: var(--c-bg);
   overflow-x: hidden;
   overflow-y: scroll;
