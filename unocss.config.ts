@@ -28,7 +28,16 @@ export default defineConfig({
       fonts: {
         sans: 'Inter:400,600,800',
         mono: 'DM Mono:400,600',
-        LXGWWenKai: 'LXGWWenKai:400,600',
+        LXGWWenKai: [
+          {
+            name: 'LXGW WenKai Screen',
+            weights: ['400', '600'],
+          },
+          {
+            name: 'sans-serif',
+            provider: 'none',
+          },
+        ],
       },
     }),
   ],
