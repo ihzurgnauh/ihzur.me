@@ -1,6 +1,4 @@
-
-Based on [antfu.me](https://github.com/antfu/antfu.me)
-powered by [Vite](https://vitejs.dev/)
+Based on [antfu.me](https://github.com/antfu/antfu.me)<br>
 The font uses [LXGW WenKai](https://github.com/lxgw/LxgwWenKai)
 
 <br>
