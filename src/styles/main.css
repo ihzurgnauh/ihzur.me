@@ -4,6 +4,11 @@
   --c-scrollbar-hover: #bbb;
 }
 
+@font-face {
+  font-family: "LXGWWenKai";
+  src: url(../assets/fonts/LXGWWenKai-Bold.ttf);
+}
+
 html {
   background-color: var(--c-bg);
   overflow-x: hidden;
