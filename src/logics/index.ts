@@ -79,7 +79,7 @@ export function dateToSeason(d: string | Date) {
   return monthToSeasonMap.get(date.month() + 1)
 }
 
-export function convertToGanZhiYear(d: string | Date) {
+export function sexagenaryCycleYear(d: string | Date) {
   const currentYear = dayjs(d).year()
   const heavenlyStemMap = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
   const earthlyBranchMap = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
