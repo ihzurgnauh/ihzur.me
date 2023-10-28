@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { formatDate } from '~/logics'
+import { convertToGanZhiYear, formatDate } from '~/logics'
 import type { Post } from '~/types'
 
 const props = defineProps<{
@@ -38,7 +38,7 @@ function isSameGroup(a: Post, b?: Post) {
 function getGroupName(p: Post) {
   if (isFuture(p.date))
     return 'Upcoming'
-  return getYear(p.date)
+  return convertToGanZhiYear(getYear(p.date).toString())
 }
 </script>
 

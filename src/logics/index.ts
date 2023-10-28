@@ -78,3 +78,20 @@ export function dateToSeason(d: string | Date) {
   ])
   return monthToSeasonMap.get(date.month() + 1)
 }
+
+export function convertToGanZhiYear(d: string | Date) {
+  const currentYear = dayjs(d).year()
+  const heavenlyStemMap = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
+  const earthlyBranchMap = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
+
+  // 基数
+  const radix = currentYear - 3
+  const heavenlyStemRadix = radix % 10
+  const earthlyBranchRadix = radix % 12
+
+  // 公元年数先减三，除10余数是天干，基数改用12除，余数便是地支年, 若得0为1之前，即最后一个
+  const heavenlyStem = heavenlyStemMap[heavenlyStemRadix === 0 ? 9 : heavenlyStemRadix - 1]
+  const earthlyBranch = earthlyBranchMap[earthlyBranchRadix === 0 ? 11 : earthlyBranchRadix - 1]
+
+  return `${heavenlyStem + earthlyBranch}年`
+}
