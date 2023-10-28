@@ -32,19 +32,16 @@ const { y: scroll } = useWindowScroll()
     <nav class="nav">
       <div class="spacer" />
       <div class="right" print:op0>
-        <RouterLink to="/posts" title="Blog">
-          <span class="lt-md:hidden">Blog</span>
+        <RouterLink to="/posts" title="随笔">
+          <span class="lt-md:hidden">随笔</span>
           <div i-line-md-text-box md:hidden />
         </RouterLink>
-        <RouterLink to="/notes" class="lt-md:hidden" title="Notes">
-          Notes
+        <RouterLink to="/notes" class="lt-md:hidden" title="杂识">
+          杂识
         </RouterLink>
-        <RouterLink to="/bookmarks" title="Bookmarks">
+        <RouterLink to="/bookmarks" title="书签">
           <div i-material-symbols-bookmarks-outline />
         </RouterLink>
-        <!-- <router-link to="/notes" title="Notes">
-          <div i-ri-sticky-note-line />
-        </router-link> -->
         <a href="https://github.com/ihzurgnauh" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-line-md-github />
         </a>

@@ -30,7 +30,7 @@ export default defineConfig({
         mono: 'DM Mono:400,600',
         LXGWWenKai: [
           {
-            name: 'LXGW WenKai Screen',
+            name: 'LXGW WenKai',
             weights: ['400', '600'],
           },
           {

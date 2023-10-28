@@ -119,9 +119,9 @@ onMounted(() => {
     <span font-mono op50 />
     <RouterLink
       :to="route.path.split('/').slice(0, -1).join('/') || '/'"
-      class="font-mono op50 hover:op75"
+      class=" op50 hover:op75"
     >
-      {{ 'cd ..' }}
+      {{ '返回 ..' }}
     </RouterLink>
   </div>
 </template>

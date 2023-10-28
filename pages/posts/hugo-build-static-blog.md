@@ -3,6 +3,7 @@ title: "使用hugo搭建静态博客"
 date: 2023-01-28T11:13:35+08:00
 lang: zh
 duration: 8min
+type: note
 ---
 [[toc]]
 
