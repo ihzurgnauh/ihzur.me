@@ -1,10 +1,10 @@
 ---
 title: Bookmarks - ihzurgnauh
-display: Bookmarks
+display: 书签
 subtitle: 忘记和不曾察觉的事，等同于从未发生
 ---
 
-### Books
+
 
 - [我与地坛](https://weread.qq.com/web/reader/43f327705a48fc43feb9160kecc32f3013eccbc87e4b62e)
 

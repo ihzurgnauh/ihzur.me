@@ -39,8 +39,12 @@ const { y: scroll } = useWindowScroll()
         <RouterLink to="/notes" class="lt-md:hidden" title="杂识">
           杂识
         </RouterLink>
+        <RouterLink to="/strange-thinkings" title="奇思怪想">
+          <span class="lt-md:hidden">奇思</span>
+          <div i-ph-scribble-loop-bold md:hidden />
+        </RouterLink>
         <RouterLink to="/bookmarks" title="书签">
-          <div i-material-symbols-bookmarks-outline />
+          <div i-mingcute-bookmarks-line />
         </RouterLink>
         <a href="https://github.com/ihzurgnauh" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-line-md-github />
