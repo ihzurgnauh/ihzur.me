@@ -103,7 +103,6 @@ function getGroupName(p: Post) {
                 {{ formatDate(route.date, true) }}
               </span>
               <span v-if="route.duration" text-sm op40 ws-nowrap>· {{ route.duration }}</span>
-              <span v-if="route.platform" text-sm op40 ws-nowrap>· {{ route.platform }}</span>
               <span
                 v-if="route.lang === 'zh'"
                 align-middle flex-none

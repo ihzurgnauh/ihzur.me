@@ -4,7 +4,6 @@ export interface Post {
   date: string
   lang?: string
   desc?: string
-  platform?: string
   duration?: string
   redirect?: string
 }
