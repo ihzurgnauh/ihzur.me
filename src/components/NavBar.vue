@@ -41,7 +41,7 @@ const { y: scroll } = useWindowScroll()
         </RouterLink>
         <RouterLink to="/strange-thinkings" title="奇思怪想">
           <span class="lt-md:hidden">奇思</span>
-          <div i-ph-scribble-loop-bold md:hidden />
+          <div i-line-md-watch-loop md:hidden />
         </RouterLink>
         <RouterLink to="/bookmarks" title="书签">
           <div i-mingcute-bookmarks-line />
