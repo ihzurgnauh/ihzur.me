@@ -5,8 +5,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production vite-ssg build && esno ./scripts/rss.ts",
     "dev": "vite --port 3333 --open",
-    "preview": "vite preview",
-    "lint": "eslint ."
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vueuse/core": "^10.4.1",
@@ -19,7 +18,6 @@
     "vue-router-better-scroller": "^0.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^1.0.0-beta.19",
     "@iconify/json": "^2.2.132",
     "@octokit/rest": "^20.0.2",
     "@types/degit": "^2.8.4",
@@ -41,7 +39,6 @@
     "feed": "^4.2.2",
     "fs-extra": "^11.1.1",
     "gray-matter": "^4.0.3",
-    "lint-staged": "^14.0.1",
     "markdown-it": "^13.0.2",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-link-attributes": "^4.0.1",
@@ -52,7 +49,6 @@
     "rimraf": "^5.0.5",
     "shikiji": "^0.6.8",
     "simple-git": "^3.20.0",
-    "simple-git-hooks": "^2.9.0",
     "typescript": "^5.2.2",
     "unocss": "^0.57.1",
     "unplugin-auto-import": "^0.16.6",
@@ -64,11 +60,5 @@
     "vite-plugin-pages": "^0.31.0",
     "vite-ssg": "^0.23.3",
     "vite-svg-loader": "^4.0.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix"
   }
 }
