@@ -118,8 +118,9 @@ onMounted(() => {
   <div v-if="route.path !== '/'" class="prose m-auto mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
     <span font-mono op50 />
     <RouterLink
-      :to="route.path.split('/').slice(0, -1).join('/') || '/'"
+      to=""
       class=" op50 hover:op75"
+      @click="router.go(-1)"
     >
       {{ '返回 ..' }}
     </RouterLink>
