@@ -17,6 +17,7 @@ import UnoCSS from 'unocss/vite'
 import SVG from 'vite-svg-loader'
 import { bundledLanguages, getHighlighter } from 'shikiji'
 import TOC from 'markdown-it-table-of-contents'
+import GitHubAlerts from 'markdown-it-github-alerts'
 
 // import sharp from 'sharp'
 import { slugify } from './scripts/slugify'
@@ -116,6 +117,8 @@ export default defineConfig({
           slugify,
           containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-line-md-align-left" /></div>',
         })
+
+        md.use(GitHubAlerts)
       },
       // frontmatterPreprocess(frontmatter, options, id, defaults) {
       //   (() => {

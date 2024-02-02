@@ -94,7 +94,7 @@ onMounted(() => {
         {{ frontmatter.duration }}
       </span>
       <span class="pl-4">
-        <i i-mingcute-flower-2-line />
+        <i i-mingcute-maple-leaf-line />
         {{ dateToSeason(frontmatter.date) }}
       </span>
     </p>
