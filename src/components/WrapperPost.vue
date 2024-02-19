@@ -106,9 +106,9 @@ onMounted(() => {
     </p>
     <p
       v-if="frontmatter.draft"
-      class="slide-enter" bg-orange-4:10 text-orange-4 border="l-3 orange-4" px4 py2
+      class="slide-enter" bg-orange-3:10 text-orange-4 border="l-3 orange-4" px4 py2
     >
-      This is a draft post, the content may be incomplete. Please check back later.
+      这是一篇草稿，内容可能不完整或者会随时变动，请稍后再回来查看。
     </p>
   </div>
   <article ref="content" :class="[frontmatter.tocAlwaysOn ? 'toc-always-on' : '', frontmatter.class]">
