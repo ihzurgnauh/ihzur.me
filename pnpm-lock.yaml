@@ -8,6 +8,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.21)
+  '@yeger/vue-masonry-wall':
+    specifier: ^5.0.10
+    version: 5.0.10(vue@3.4.21)
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -132,7 +135,7 @@ devDependencies:
     version: 5.4.3
   unocss:
     specifier: ^0.58.6
-    version: 0.58.8(postcss@8.4.35)(vite@5.2.7)
+    version: 0.58.8(postcss@8.4.38)(vite@5.2.7)
   unplugin-auto-import:
     specifier: ^0.17.5
     version: 0.17.5(@vueuse/core@10.9.0)
@@ -1590,7 +1593,7 @@ packages:
       sirv: 2.0.4
     dev: true
 
-  /@unocss/postcss@0.58.8(postcss@8.4.35):
+  /@unocss/postcss@0.58.8(postcss@8.4.38):
     resolution: {integrity: sha512-nI8Cbvc7/IFMGVeFXAHEom5X76gb0dSylBGvlVtWakq27nBwlxG4c3+58dVWg7Nyqvn1mC/sOMGpqjfk8FdJcQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -1602,7 +1605,7 @@ packages:
       css-tree: 2.3.1
       fast-glob: 3.3.2
       magic-string: 0.30.8
-      postcss: 8.4.35
+      postcss: 8.4.38
     dev: true
 
   /@unocss/preset-attributify@0.58.8:
@@ -1838,6 +1841,30 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  /@yeger/debounce@2.0.8:
+    resolution: {integrity: sha512-wuT6PB0MFhZy6BePkMDcUV5PItyxPd6IvfT2nqA4Z1frSvxaaDkxPPTU0vJmctx986gvp75VlzlL9sQSDltBNg==}
+    dev: false
+
+  /@yeger/vue-lib-adapter@2.0.8:
+    resolution: {integrity: sha512-ryJBUaJ4BX/IARUDG8jvZXBnNb8cJSVjQeW7aw1rcQWrN6Wxfq9iH9ZqO8GhF7jVQpw1VHIeGcrZPAz/n+U/aw==}
+    dev: false
+
+  /@yeger/vue-masonry-wall-core@5.0.9:
+    resolution: {integrity: sha512-YvcpWe0DEQT/VuRkCi2QJgERqV/OKgnkKyR1UtM565g3MRC09c/pMjqRL7XWIuwTlhxMW88N/7+i8OnUDbuJGg==}
+    dependencies:
+      '@yeger/debounce': 2.0.8
+      '@yeger/vue-lib-adapter': 2.0.8
+    dev: false
+
+  /@yeger/vue-masonry-wall@5.0.10(vue@3.4.21):
+    resolution: {integrity: sha512-a+wBnP5s97xNWJxazzBVjNCpi+P6En1lkY/ig6rTILIn8/h2X42qi7EbZYKjUUccRzJd06LaJ00SlTeNl9UsOQ==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@yeger/vue-masonry-wall-core': 5.0.9
+      vue: 3.4.21(typescript@5.4.3)
+    dev: false
 
   /acorn@8.11.3:
     resolution: {integrity: sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==}
@@ -3985,7 +4012,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unocss@0.58.8(postcss@8.4.35)(vite@5.2.7):
+  /unocss@0.58.8(postcss@8.4.38)(vite@5.2.7):
     resolution: {integrity: sha512-oMWCEgwvxJcF1BZxxkbTyTd83xtArsza3DModUrJrPndnpOVVz9fZ5g6wcrDbVpv6+cvRrgMCeKMlWKt9WIIsA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -4001,7 +4028,7 @@ packages:
       '@unocss/cli': 0.58.8
       '@unocss/core': 0.58.8
       '@unocss/extractor-arbitrary-variants': 0.58.8
-      '@unocss/postcss': 0.58.8(postcss@8.4.35)
+      '@unocss/postcss': 0.58.8(postcss@8.4.38)
       '@unocss/preset-attributify': 0.58.8
       '@unocss/preset-icons': 0.58.8
       '@unocss/preset-mini': 0.58.8

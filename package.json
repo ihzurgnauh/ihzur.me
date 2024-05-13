@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
+    "@yeger/vue-masonry-wall": "^5.0.10",
     "dayjs": "^1.11.10",
     "floating-vue": "2.0.0-beta.24",
     "nprogress": "^0.2.0",
