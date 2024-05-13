@@ -18,7 +18,6 @@ const routes: Post[] = router.getRoutes()
     title: i.meta.frontmatter.title,
     date: i.meta.frontmatter.date,
     lang: i.meta.frontmatter.lang,
-    duration: i.meta.frontmatter.duration,
     upcoming: i.meta.frontmatter.upcoming,
     redirect: i.meta.frontmatter.redirect,
   }))
@@ -59,7 +58,7 @@ function getGroupName(p: Post) {
           '--enter-step': '60ms',
         }"
       >
-        <span text-7em color-transparent absolute left--3rem top--2rem font-bold text-stroke-2 text-stroke-hex-777 op13>{{ getGroupName(route) }}</span>
+        <span text-7em color-transparent absolute left--3rem top--1.7rem font-bold text-stroke-2 text-stroke-hex-777 op13>{{ getGroupName(route) }}</span>
       </div>
       <div
         class="slide-enter"
@@ -102,7 +101,7 @@ function getGroupName(p: Post) {
               <span text-sm op50 ws-nowrap>
                 {{ formatDate(route.date, true) }}
               </span>
-              <span v-if="route.duration" text-sm op40 ws-nowrap>· {{ route.duration }}</span>
+              <!-- <span v-if="route.duration" text-sm op40 ws-nowrap>· {{ route.duration }}</span> -->
               <span
                 v-if="route.lang === 'en'"
                 align-middle flex-none

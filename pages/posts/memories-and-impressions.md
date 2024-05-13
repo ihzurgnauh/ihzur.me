@@ -2,7 +2,6 @@
 title: "记忆与印象"
 date: 2023-09-30T18:03:12+08:00
 lang: zh
-duration: 3min
 ---
 
 
