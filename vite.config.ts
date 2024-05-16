@@ -42,10 +42,8 @@ export default defineConfig({
   },
   plugins: [
     UnoCSS(),
-
     Vue({
       include: [/\.vue$/, /\.md$/],
-      reactivityTransform: true,
       script: {
         defineModel: true,
       },

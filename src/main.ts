@@ -16,6 +16,7 @@ import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
 import { setupRouterScroller } from 'vue-router-better-scroller'
 import FloatingVue from 'floating-vue'
+import VueVirtualWaterfall from '@lhlyu/vue-virtual-waterfall'
 import App from './App.vue'
 
 const routes = autoRoutes.map((i) => {
@@ -36,6 +37,7 @@ export const createApp = ViteSSG(
     dayjs.extend(LocalizedFormat)
 
     app.use(FloatingVue)
+    app.use(VueVirtualWaterfall)
 
     if (isClient) {
       const html = document.querySelector('html')!

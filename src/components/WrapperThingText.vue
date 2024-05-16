@@ -1,31 +1,44 @@
 <script setup lang="ts">
-import Masonry from '@yeger/vue-masonry-wall'
+import { render, h } from 'vue'
+import Card from './Card.vue';
 import thinkingData  from '../static/thinking-data.json';
 
-defineProps<{
-  time: string
-}>()
+// 计算真实高度
+function calcItemHeight(item: any, realWidth: number) {
+    const dom = document.createElement('div')
+
+    render(
+        h(Card, {
+            item: item,
+            style: 'width:' + realWidth + 'px',
+
+        }),
+        dom
+    )
+ 
+    document.body.appendChild(dom)
+    // 获取高度
+    const height: any = dom.firstElementChild?.getBoundingClientRect().height
+    // 移除新容器
+    document.body.removeChild(dom)
+    // 返回高度
+    return height
+}
 
 </script>
 
 <template>
-<div class="mt-5">
-  <Masonry :items="thinkingData" :ssr-columns="1" :column-width="300" :gap="16">
-    <template #default="{ item, index }">
-      <div class="border-solid border-1 border-#9999 rounded-md hover:shadow-lg hover:border-dashed transition-all">
-        <div class="thinking-text">
-          <span>{{ item.content }}</span>
-          <br />
-          <span class="text-#999 text-xs">{{ item.date }}</span>
-       </div>
-      </div>
+  <VirtualWaterfall 
+  :virtual="false" 
+  :items="thinkingData"
+  :min-column-count="1"
+  :calc-item-height="calcItemHeight"
+  >
+    <template #default="scope">
+     <Card v-if="scope?.item" :item="scope.item"></Card>
     </template>
-  </Masonry>
-</div>
+  </VirtualWaterfall>
 </template>
 
 <style scoped>
-.thinking-text {
-  margin: 1rem;
-}
 </style>
