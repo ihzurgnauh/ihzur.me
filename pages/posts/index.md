@@ -1,7 +1,7 @@
 ---
 title: Blog - ihzurgnauh
 display: ''
-plum: true
+background: plum
 ---
 
 <SubNav />

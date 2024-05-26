@@ -69,11 +69,21 @@ onMounted(() => {
       setTimeout(navigate, 1000)
   }, 1)
 })
+
+const BgComponent = computed(() => {
+  let bg = frontmatter.background
+  if (typeof window !== 'undefined') {
+    if (bg === 'plum') {
+      return defineAsyncComponent(() => import('./Plum.vue'))
+    }
+  }
+  return undefined
+})
 </script>
 
 <template>
-  <ClientOnly v-if="frontmatter.plum">
-    <Plum />
+   <ClientOnly v-if="BgComponent">
+    <component :is="BgComponent" />
   </ClientOnly>
   <div
     v-if="frontmatter.display ?? frontmatter.title"
@@ -87,12 +97,7 @@ onMounted(() => {
       v-if="frontmatter.date"
       class="opacity-50 !-mt-6 slide-enter-50"
     >
-      <i i-mdi-clock-outline />
-      {{ formatDate(frontmatter.date, false) }}
-      <span class="pl-4">
-        <i i-fluent-tag-16-regular />
-        {{ dateToSeason(frontmatter.date) }}
-      </span>
+      {{ formatDate(frontmatter.date, false) }} {{ dateToSeason(frontmatter.date) }}
     </p>
     <p
       v-if="frontmatter.subtitle"
@@ -112,10 +117,10 @@ onMounted(() => {
   </article>
 
   <div v-if="route.path !== '/'" class="prose m-auto mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
-    <span font-mono op50 />
+    <span font-mono op50>> </span>
     <RouterLink
       :to="route.path.split('/').slice(0, -1).join('/') || '/'"
-      class=" op50 hover:op75"
+      class="op50 hover:op75"
     >
       {{ '返回 ..' }}
     </RouterLink>

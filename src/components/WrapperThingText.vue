@@ -10,8 +10,7 @@ function calcItemHeight(item: any, realWidth: number) {
     render(
         h(Card, {
             item: item,
-            style: 'width:' + realWidth + 'px',
-
+            style: 'width:' + realWidth + 'px'
         }),
         dom
     )
@@ -35,7 +34,7 @@ function calcItemHeight(item: any, realWidth: number) {
   :calc-item-height="calcItemHeight"
   >
     <template #default="scope">
-     <Card v-if="scope?.item" :item="scope.item"></Card>
+      <Card v-if="scope?.item" :item="scope.item"></Card>
     </template>
   </VirtualWaterfall>
 </template>

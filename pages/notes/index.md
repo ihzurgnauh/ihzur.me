@@ -1,7 +1,7 @@
 ---
 title: Notes - ihzurgnauh
-plum: true
 display: ''
+background: plum
 ---
 <SubNav />
 

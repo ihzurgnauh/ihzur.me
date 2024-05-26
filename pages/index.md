@@ -1,6 +1,6 @@
 ---
 title: ihzurgnauh
-plum: true
+background: plum
 ---
 
 十二月运行，周而复始，

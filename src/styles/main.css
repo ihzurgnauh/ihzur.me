@@ -1,8 +1,8 @@
 @import url('https://lib.baomitu.com/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-bold.min.css');
 
 :root {
-  --c-bg: #eceae7;
-  --c-scrollbar: #bbbbbb9c;
+  --c-bg: #fff;
+  --c-scrollbar: #eee;
   --c-scrollbar-hover: #bbb;
 }
 
@@ -37,35 +37,8 @@ html.dark {
   height: 2px;
 }
 
-/* Wrap new scrollbar properties in @supports rule for browsers without `::-webkit-scrollbar-*` support */
-/* This way chrome won't override `::-webkit-scrollbar-*` selectors */
-@supports not selector(::-webkit-scrollbar) {
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--c-scrollbar) var(--c-bg);
-  }
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-}
-::-webkit-scrollbar:horizontal {
-  height: 9px;
-}
-::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
-  background: var(--c-bg);
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--c-scrollbar);
-  border-radius: 5px;
-  border-style: dashed;
-  border-color: transparent;
-  border-width: 2px;
-  background-clip: padding-box;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--c-scrollbar-hover);
+* {
+  scrollbar-color: var(--c-scrollbar) var(--c-bg);
 }
 
 h2 + p > em:first-child {
