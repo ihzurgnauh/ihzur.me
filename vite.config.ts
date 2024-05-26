@@ -2,7 +2,8 @@ import { basename, dirname, resolve } from 'node:path'
 import { Buffer } from 'node:buffer'
 import { defineConfig } from 'vite'
 import fs from 'fs-extra'
-import Pages from 'vite-plugin-pages'
+import VueRouter from 'unplugin-vue-router/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 import Inspect from 'vite-plugin-inspect'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
@@ -17,9 +18,10 @@ import UnoCSS from 'unocss/vite'
 import SVG from 'vite-svg-loader'
 import MarkdownItShiki from '@shikijs/markdown-it'
 import { rendererRich, transformerTwoslash } from '@shikijs/twoslash'
-import TOC from 'markdown-it-table-of-contents'
 import GitHubAlerts from 'markdown-it-github-alerts'
 
+// @ts-expect-error missing types
+import TOC from 'markdown-it-table-of-contents'
 // import sharp from 'sharp'
 import { slugify } from './scripts/slugify'
 
@@ -49,19 +51,21 @@ export default defineConfig({
       },
     }),
 
-    Pages({
-      extensions: ['vue', 'md'],
-      dirs: 'pages',
+    VueRouter({
+      extensions: ['.vue', '.md'],
+      routesFolder: 'pages',
+      logs: true,
       extendRoute(route) {
-        const path = resolve(__dirname, route.component.slice(1))
+        const path = route.components.get('default')
+        if (!path)
+          return
 
         if (!path.includes('projects.md') && path.endsWith('.md')) {
-          const md = fs.readFileSync(path, 'utf-8')
-          const { data } = matter(md)
-          route.meta = Object.assign(route.meta || {}, { frontmatter: data })
+          const { data } = matter(fs.readFileSync(path, 'utf-8'))
+          route.addToMeta({
+            frontmatter: data,
+          })
         }
-
-        return route
       },
     }),
 
@@ -140,9 +144,8 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
-        'vue-router',
-        '@vueuse/core',
-        '@vueuse/head',
+        VueRouterAutoImports,
+        '@vueuse/core'
       ],
     }),
 
@@ -187,8 +190,7 @@ export default defineConfig({
   },
 
   ssgOptions: {
-    formatting: 'minify',
-    format: 'cjs',
+    formatting: 'minify'
   },
 })
 

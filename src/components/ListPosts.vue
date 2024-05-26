@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router/auto'
 import { formatDate, sexagenaryCycleYear } from '~/logics'
 import type { Post } from '~/types'
 
@@ -11,14 +11,13 @@ const props = defineProps<{
 
 const router = useRouter()
 const routes: Post[] = router.getRoutes()
-  .filter(i => i.path.startsWith(`/${props.type}`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
-  .filter(i => !i.path.endsWith('.html'))
-  .map(i => ({
+  .filter((i: any) => i.path.startsWith(`/${props.type}`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
+  .filter((i: any) => !i.path.endsWith('.html'))
+  .map((i: any) => ({
     path: i.meta.frontmatter.redirect || i.path,
     title: i.meta.frontmatter.title,
     date: i.meta.frontmatter.date,
     lang: i.meta.frontmatter.lang,
-    upcoming: i.meta.frontmatter.upcoming,
     redirect: i.meta.frontmatter.redirect,
   }))
   
@@ -58,7 +57,7 @@ function getGroupName(p: Post) {
           '--enter-step': '60ms',
         }"
       >
-        <span text-7em color-transparent absolute left--3rem top--1.7rem font-bold text-stroke-2 text-stroke-hex-777 op13>{{ getGroupName(route) }}</span>
+        <span text-7.4em color-transparent absolute left--3rem top--1.7rem font-bold text-stroke-2 text-stroke-hex-777 op11>{{ getGroupName(route) }}</span>
       </div>
       <div
         class="slide-enter"

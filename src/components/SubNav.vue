@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router/auto'
 
 const inactiveStyle = 'opacity-20 hover:opacity-50'
 const activeStyle = 'opacity-100 underline'
