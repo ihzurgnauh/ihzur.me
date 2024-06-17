@@ -36,8 +36,8 @@ const { y: scroll } = useWindowScroll()
           <span class="lt-md:hidden">随笔</span>
           <div i-line-md-text-box md:hidden />
         </RouterLink>
-        <RouterLink to="/notes" class="lt-md:hidden" title="杂识">
-          杂识
+        <RouterLink to="/notes" class="lt-md:hidden" title="杂记">
+          杂记
         </RouterLink>
         <RouterLink to="/strange-thinkings" title="奇思怪想">
           <span class="lt-md:hidden">奇思</span>

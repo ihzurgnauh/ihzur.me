@@ -14,7 +14,7 @@ const route = useRoute()
         随笔
       </RouterLink>
       <RouterLink to="/notes" class="!border-none" :class="route.path === '/notes' ? activeStyle : inactiveStyle">
-        杂识
+        杂记
       </RouterLink>
     </div>
   </div>
