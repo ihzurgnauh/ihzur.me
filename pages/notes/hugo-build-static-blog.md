@@ -37,7 +37,7 @@ cd blogDemo # 进入blogDemo目录
 
 ## 安装主题
 
-Hugo的官网[主题](https://themes.gohugo.io/)种类很多，基本能满足各类需求，安装只需把对应的主题clone到themes目录，具体的主题配置参考其文档即可，下面就以[even主题](https://github.com/olOwOlo/hugo-theme-even)为例。
+Hugo的官网[主题](https://themes.gohugo.io/)种类很多，基本能满足各类需求，安装只需把对应的主题clone到themes目录，具体的主题配置参考其文档即可，这里就以[even主题](https://github.com/olOwOlo/hugo-theme-even)为例。
 
 ```bash
 git clone https://github.com/olOwOlo/hugo-theme-even.git
@@ -45,7 +45,7 @@ git clone https://github.com/olOwOlo/hugo-theme-even.git
 
 ## 本地调试
 
-安装完主题后，在网站的配置文件目录，输入下面命令，就可以在本地预览了，服务器的默认地址是http://localhost:1313/, 端口号可以通过 -p 自定义端口 来修改。
+安装完主题后，在网站的配置文件目录，输入下面命令，就可以在本地预览了，服务器的默认地址是http://localhost:1313/, 端口号可以通过 -p 参数自定义端口来修改。
 
 ```bash
 hugo server # 启动本地调试服务

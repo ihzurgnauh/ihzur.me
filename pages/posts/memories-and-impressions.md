@@ -8,12 +8,6 @@ lang: zh
 
 每年只有这个时候记忆才是清晰的，以及更强烈的怀念，但也只能怀念。
 
-<img src='https://s11.ax1x.com/2023/10/21/pikeG2n.jpg' alt='记忆中的山'/>
+![每年都要来的山](https://s11.ax1x.com/2023/10/21/pikeG2n.jpg)
 
-<center><span style="font-size: small;">每年都要来的山</span></center>
-
-
-
-<img src='https://s11.ax1x.com/2023/10/21/pike88s.jpg' alt='傍晚趴在门前空地的狗'/>
-
-<center><span style="font-size: small;">傍晚趴在门前空地的狗</span></center>
+![傍晚趴在门前空地的狗](https://s11.ax1x.com/2023/10/21/pike88s.jpg)
