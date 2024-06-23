@@ -25,7 +25,6 @@ import { slugify } from './scripts/slugify'
 // @ts-expect-error missing types
 import TOC from 'markdown-it-table-of-contents'
 
-
 const promises: Promise<any>[] = []
 
 export default defineConfig({
@@ -125,25 +124,7 @@ export default defineConfig({
         md.use(Footnote)
 
         md.use(figure)
-      },
-      // frontmatterPreprocess(frontmatter, options, id, defaults) {
-      //   (() => {
-      //     if (!id.endsWith('.md'))
-      //       return
-      //     const route = basename(id, '.md')
-      //     if (route === 'index' || frontmatter.image || !frontmatter.title)
-      //       return
-      //     const path = `og/${route}.png`
-      //     promises.push(
-      //       fs.existsSync(`${id.slice(0, -3)}.png`)
-      //         ? fs.copy(`${id.slice(0, -3)}.png`, `public/${path}`)
-      //         : generateOg(frontmatter.title!.replace(/\s-\s.*$/, '').trim(), `public/${path}`),
-      //     )
-      //     frontmatter.image = `https://ihzurgnauh.github.io/${path}`
-      //   })()
-      //   const head = defaults(frontmatter, options)
-      //   return { head, frontmatter }
-      // },
+      }
     }),
 
     AutoImport({
