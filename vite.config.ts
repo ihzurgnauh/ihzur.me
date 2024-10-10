@@ -45,10 +45,7 @@ export default defineConfig({
   plugins: [
     UnoCSS(),
     Vue({
-      include: [/\.vue$/, /\.md$/],
-      script: {
-        defineModel: true,
-      },
+      include: [/\.vue$/, /\.md$/]
     }),
 
     VueRouter({
