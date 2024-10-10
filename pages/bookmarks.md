@@ -15,3 +15,5 @@ subtitle: 忘记和不曾察觉的事，等同于从未发生
 - [人间草木](https://weread.qq.com/web/bookDetail/df9323b07189ae18df9c901)
 
 - [万历十五年](https://weread.qq.com/web/reader/af732390813ab74f3g019dddk45c322601945c48cce2e120)
+
+- [且介亭杂文](https://weread.qq.com/web/reader/fbc32c405c5ac1fbc9b4877)
