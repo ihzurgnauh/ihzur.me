@@ -23,8 +23,10 @@ declare module 'vue-router/auto-routes' {
     '/bookmarks': RouteRecordInfo<'/bookmarks', '/bookmarks', Record<never, never>, Record<never, never>>,
     '/notes/': RouteRecordInfo<'/notes/', '/notes', Record<never, never>, Record<never, never>>,
     '/notes/hugo-build-static-blog': RouteRecordInfo<'/notes/hugo-build-static-blog', '/notes/hugo-build-static-blog', Record<never, never>, Record<never, never>>,
+    '/notes/in-ubuntu-setting-node-environment': RouteRecordInfo<'/notes/in-ubuntu-setting-node-environment', '/notes/in-ubuntu-setting-node-environment', Record<never, never>, Record<never, never>>,
     '/posts/': RouteRecordInfo<'/posts/', '/posts', Record<never, never>, Record<never, never>>,
     '/posts/memories-and-impressions': RouteRecordInfo<'/posts/memories-and-impressions', '/posts/memories-and-impressions', Record<never, never>, Record<never, never>>,
+    '/posts/miss-unseen': RouteRecordInfo<'/posts/miss-unseen', '/posts/miss-unseen', Record<never, never>, Record<never, never>>,
     '/strange-thinkings': RouteRecordInfo<'/strange-thinkings', '/strange-thinkings', Record<never, never>, Record<never, never>>,
   }
 }
