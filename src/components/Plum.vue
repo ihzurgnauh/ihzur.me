@@ -12,8 +12,8 @@ const { random } = Math
 const size = reactive(useWindowSize())
 
 const start = ref<Fn>(() => {})
-const MIN_BRANCH = 25
-const len = ref(5)
+const MIN_BRANCH = 27
+const len = ref(6)
 const stopped = ref(false)
 
 function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
