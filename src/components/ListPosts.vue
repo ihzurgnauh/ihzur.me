@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto'
-import { formatDate, sexagenaryCycleYear } from '~/logics'
+import { formatDate, getSexagenaryCycleYear } from '~/logics'
 import type { Post } from '~/types'
 
 const props = defineProps<{
@@ -26,9 +26,10 @@ const posts = computed(() =>
     .sort((a, b) => +new Date(b.date) - +new Date(a.date)),
 )
 
-const getYear = (a: Date | string | number) => new Date(a).getFullYear()
+// const getYear = (a: Date | string | number) => new Date(a).getFullYear()
+const getLunarCalendarYear = (a: Date | string | number) => getSexagenaryCycleYear(new Date(a))
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()
-const isSameYear = (a?: Date | string | number, b?: Date | string | number) => a && b && getYear(a) === getYear(b)
+const isSameYear = (a?: Date | string | number, b?: Date | string | number) => a && b && getLunarCalendarYear(a) === getLunarCalendarYear(b)
 function isSameGroup(a: Post, b?: Post) {
   return (isFuture(a.date) === isFuture(b?.date)) && isSameYear(a.date, b?.date)
 }
@@ -36,7 +37,7 @@ function isSameGroup(a: Post, b?: Post) {
 function getGroupName(p: Post) {
   if (isFuture(p.date))
     return '将至'
-  return sexagenaryCycleYear(getYear(p.date).toString())
+  return getSexagenaryCycleYear(p.date)
 }
 </script>
 

@@ -25,7 +25,7 @@ export function toggleDark(event: MouseEvent) {
     Math.max(x, innerWidth - x),
     Math.max(y, innerHeight - y),
   )
-  // @ts-expect-error: Transition API
+  
   const transition = document.startViewTransition(async () => {
     isDark.value = !isDark.value
     await nextTick()
@@ -60,38 +60,60 @@ export function formatDate(d: string | Date, onlyDate = true) {
   return date.format('LL')
 }
 
-export function dateToSeason(d: string | Date) {
-  const date = dayjs(d)
-  const monthToSeasonMap = new Map([
-    [3, '初春'],
-    [4, '仲春'],
-    [5, '暮春'],
-    [6, '初夏'],
-    [7, '仲夏'],
-    [8, '季夏'],
-    [9, '初秋'],
-    [10, '仲秋'],
-    [11, '深秋'],
-    [12, '初冬'],
-    [1, '仲冬'],
-    [2, '季冬'],
-  ])
-  return monthToSeasonMap.get(date.month() + 1)
+function getLunarCalendar(d: string | Date) {
+  const lunarCalendar : {
+    year: number,
+    month: string
+  } = { year: 0, month: '' }
+
+  // 获取农历日期
+  const lunarCalendarString = new Date(d).toLocaleString('zh-CN-u-ca-chinese')
+  lunarCalendar.year = Number.parseInt(lunarCalendarString.slice(0, 4))
+  lunarCalendar.month = lunarCalendarString.slice(5, lunarCalendarString.indexOf('月') + 1)
+  return lunarCalendar
 }
 
-export function sexagenaryCycleYear(d: string | Date) {
-  const currentYear = dayjs(d).year()
+/**
+ * 农历年份转干支纪年
+ * @param year 农历年份
+ * @returns 干支纪年
+ */
+function sexagenaryCycleYear(year: number) {
+  // 天干
   const heavenlyStemMap = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
+  // 地支
   const earthlyBranchMap = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 
   // 基数
-  const radix = currentYear - 3
+  const radix = year - 3
+  // 公元年数先减三，除10余数是天干，基数改用12除，余数便是地支年, 若得0为1之前，即最后一个
   const heavenlyStemRadix = radix % 10
   const earthlyBranchRadix = radix % 12
 
-  // 公元年数先减三，除10余数是天干，基数改用12除，余数便是地支年, 若得0为1之前，即最后一个
   const heavenlyStem = heavenlyStemMap[heavenlyStemRadix === 0 ? 9 : heavenlyStemRadix - 1]
   const earthlyBranch = earthlyBranchMap[earthlyBranchRadix === 0 ? 11 : earthlyBranchRadix - 1]
 
   return `${heavenlyStem + earthlyBranch}年`
+}
+
+export function dateToSeason(d: string | Date) {
+  const monthToSeasonMap = new Map([
+    ['正月', '初春'],
+    ['二月', '仲春'],
+    ['三月', '暮春'],
+    ['四月', '初夏'],
+    ['五月', '仲夏'],
+    ['六月', '季夏'],
+    ['七月', '初秋'],
+    ['八月', '仲秋'],
+    ['九月', '深秋'],
+    ['十月', '初冬'],
+    ['十一月', '仲冬'],
+    ['腊月', '季冬'],
+  ])
+  return monthToSeasonMap.get(getLunarCalendar(d).month)
+}
+
+export function getSexagenaryCycleYear(d: string | Date) { 
+  return sexagenaryCycleYear(getLunarCalendar(d).year)
 }
