@@ -9,7 +9,7 @@ import { Feed } from 'feed'
 const DOMAIN = 'https://ihzurgnauh.github.io'
 const AUTHOR = {
   name: 'ihzurgnauh',
-  email: 'ihzur@qq.com',
+  email: 'zhiruhuang7@gmail.com',
   link: DOMAIN,
 }
 const markdown = MarkdownIt({
@@ -29,10 +29,10 @@ async function buildBlogRSS() {
 
   const options = {
     title: 'ihzurgnauh',
-    description: 'ihzurgnauh\' Blog',
+    description: 'ihzurgnauh Blog feed.',
     id: 'https://ihzurgnauh.github.io',
     link: 'https://ihzurgnauh.github.io',
-    copyright: 'CC BY-NC-SA 4.0 2023 © ihzurgnauh',
+    copyright: 'CC BY-NC-SA 4.0 2023-PRESENT © ihzurgnauh',
     feedLinks: {
       json: 'https://ihzurgnauh.github.io/feed.json',
       atom: 'https://ihzurgnauh.github.io/feed.atom',
