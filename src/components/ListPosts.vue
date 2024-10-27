@@ -58,7 +58,7 @@ function getGroupName(p: Post) {
           '--enter-step': '60ms',
         }"
       >
-        <span text-7.4em color-transparent absolute left--3rem top--1.7rem font-bold text-stroke-2 text-stroke-hex-777 op11>{{ getGroupName(route) }}</span>
+        <span text-7em color-transparent absolute left--3rem top--1.7rem font-bold tracking-wide text-stroke-2 text-stroke-hex-777 op10>{{ getGroupName(route) }}</span>
       </div>
       <div
         class="slide-enter"
