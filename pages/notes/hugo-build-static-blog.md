@@ -62,7 +62,7 @@ git clone https://github.com/olOwOlo/hugo-theme-even.git
 
 ## 本地调试和预览
 
-安装完主题后，在网站的配置文件目录，输入下面命令，就可以在本地预览了，服务器的默认地址是<TextCopy inline :slice="[1, -1]">http://localhost:1313/</TextCopy>, 端口号可以通过 **-p** 参数自定义端口来修改。
+安装完主题后，在网站的配置文件目录，输入下面命令，就可以在本地预览了，服务器的默认地址是<TextCopy inline>http://localhost:1313/</TextCopy>, 端口号可以通过 **-p** 参数自定义端口来修改。
 
 ```bash
 hugo server # 启动本地调试服务
