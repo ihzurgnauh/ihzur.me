@@ -29,7 +29,7 @@ async function buildBlogRSS() {
 
   const options = {
     title: 'ihzurgnauh',
-    description: 'ihzurgnauh Blog feed. feedId:73026470479946752+userId:43590855879824384 ',
+    description: '在循环往复的时空中，将时间的痕迹存储于此',
     id: 'https://ihzurgnauh.github.io',
     link: 'https://ihzurgnauh.github.io',
     copyright: 'CC BY-NC-SA 4.0 2023-PRESENT © ihzurgnauh',
