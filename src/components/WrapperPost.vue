@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { dateToSeason, formatDate } from '~/logics'
+import { lunarCalendar, formatDate } from '~/logics'
 
 const { frontmatter } = defineProps({
   frontmatter: {
@@ -97,7 +97,7 @@ const BgComponent = computed(() => {
       v-if="frontmatter.date"
       class="opacity-50 !-mt-6 slide-enter-50"
     >
-      {{ formatDate(frontmatter.date, false) }} {{ dateToSeason(frontmatter.date) }}
+      {{ formatDate(frontmatter.date, false) }} {{ lunarCalendar(frontmatter.date).season }}
     </p>
     <p
       v-if="frontmatter.subtitle"

@@ -60,17 +60,35 @@ export function formatDate(d: string | Date, onlyDate = true) {
   return date.format('LL')
 }
 
-function getLunarCalendar(d: string | Date) {
-  const lunarCalendar : {
-    year: number,
-    month: string
-  } = { year: 0, month: '' }
+export function lunarCalendar(d: string | Date) {
+  const lunar: {
+    year: string,
+    month: string,
+    day: string,
+    season: string | undefined
+    date: string
+  } = { year: '', month: '', day: '', season: '', date: ''}
+
+  const lunarDayDic = [
+    '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
+    '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+    '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'
+  ]
 
   // 获取农历日期
   const lunarCalendarString = new Date(d).toLocaleString('zh-CN-u-ca-chinese')
-  lunarCalendar.year = Number.parseInt(lunarCalendarString.slice(0, 4))
-  lunarCalendar.month = lunarCalendarString.slice(5, lunarCalendarString.indexOf('月') + 1)
-  return lunarCalendar
+  const monthIndex = lunarCalendarString?.indexOf('月')
+  // 干支年
+  lunar.year = sexagenaryCycleYear(Number.parseInt(lunarCalendarString?.slice(0, 4)))
+  // 农历月
+  lunar.month = lunarCalendarString?.slice(5, monthIndex + 1)?.replace('十一月', '冬月')
+  // 农历日
+  lunar.day = lunarDayDic[Number.parseInt(lunarCalendarString?.slice(monthIndex + 1, lunarCalendarString?.indexOf(' '))) - 1]
+  // 季节
+  lunar.season = lunarMonthToSeason(lunar.month)
+  // 月日
+  lunar.date = lunar.month + lunar.day
+  return lunar
 }
 
 /**
@@ -96,24 +114,12 @@ function sexagenaryCycleYear(year: number) {
   return `${heavenlyStem + earthlyBranch}年`
 }
 
-export function dateToSeason(d: string | Date) {
-  const monthToSeasonMap = new Map([
-    ['正月', '初春'],
-    ['二月', '仲春'],
-    ['三月', '暮春'],
-    ['四月', '初夏'],
-    ['五月', '仲夏'],
-    ['六月', '季夏'],
-    ['七月', '初秋'],
-    ['八月', '仲秋'],
-    ['九月', '深秋'],
-    ['十月', '初冬'],
-    ['十一月', '仲冬'],
-    ['腊月', '季冬'],
+function lunarMonthToSeason(m: string) {
+  const seasonMap = new Map([
+    ['正月', '初春'],['二月', '仲春'],['三月', '暮春'],
+    ['四月', '初夏'],['五月', '仲夏'],['六月', '季夏'],
+    ['七月', '初秋'],['八月', '仲秋'],['九月', '深秋'],
+    ['十月', '初冬'],['冬月', '仲冬'],['腊月', '季冬']
   ])
-  return monthToSeasonMap.get(getLunarCalendar(d).month)
-}
-
-export function getSexagenaryCycleYear(d: string | Date) { 
-  return sexagenaryCycleYear(getLunarCalendar(d).year)
+  return seasonMap.get(m)
 }
