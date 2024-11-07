@@ -25,8 +25,6 @@ hugo version # 查看版本，验证安装情况
 hugo new site blogDemo # 使用Hugo新建blogDemo项目，名称可自定义
 ```
 
-**注意，创建完项目后再使用`hugo`命令时，当前目录下必须要有配置文件，即`config.toml`，否则会报错**
-
 用 Hugo 创建的网站共有 7 个文件夹和 1 个文件，这些文件分别代表
 
 - **archetypes**：存放用 hugo 命令新建的 Markdown 文件应用的 front matter 模版
@@ -45,7 +43,9 @@ hugo new site blogDemo # 使用Hugo新建blogDemo项目，名称可自定义
 
 - **config.toml**：网站配置文件
 
-  
+>[!IMPORTANT]
+>创建完项目后,在使用`hugo`命令时，当前目录下必须要有配置文件，即`config.toml`
+
 然后进入 blogDemo目录可以看到网站的文件目录。
 
 ```bash
