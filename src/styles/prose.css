@@ -1,8 +1,9 @@
 .prose {
   color: var(--fg);
-  max-width: 80ch;
+  max-width: 72ch;
   font-size: 1rem;
   line-height: 1.75;
+  --uno: tracking-wide
 }
 .prose [class~='lead'] {
   color: #4b5563;
