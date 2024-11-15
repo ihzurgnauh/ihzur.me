@@ -35,10 +35,10 @@ export default defineConfig({
             weights: ['400', '600'],
           },
           {
-            name: 'sans-serif',
+            name: 'serif',
             provider: 'none',
           },
-        ],
+        ]
       },
     }),
   ],

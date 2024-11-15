@@ -18,7 +18,7 @@ const { y: scroll } = useWindowScroll()
       to="/"
       focusable="false"
     >
-      <Logo/>
+      <Logo class="ml-3 mr-3"/>
     </RouterLink>
     <button
       title="Scroll to top"
