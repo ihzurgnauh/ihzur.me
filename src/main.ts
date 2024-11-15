@@ -19,6 +19,9 @@ import FloatingVue from 'floating-vue'
 import VueVirtualWaterfall from '@lhlyu/vue-virtual-waterfall'
 import App from './App.vue'
 
+// @ts-expect-error missing types
+import ZText from '@namchee/vue-ztext';
+
 export const createApp = ViteSSG(
   App,
   {
@@ -29,6 +32,7 @@ export const createApp = ViteSSG(
 
     app.use(FloatingVue)
     app.use(VueVirtualWaterfall)
+    app.use(ZText)
 
     if (isClient) {
       const html = document.querySelector('html')!

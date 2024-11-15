@@ -11,6 +11,9 @@ importers:
       '@lhlyu/vue-virtual-waterfall':
         specifier: ^1.0.6
         version: 1.0.6(vue@3.5.12(typescript@5.6.3))
+      '@namchee/vue-ztext':
+        specifier: ^1.0.0
+        version: 1.0.0(vue@3.5.12(typescript@5.6.3))
       '@vueuse/core':
         specifier: ^11.2.0
         version: 11.2.0(vue@3.5.12(typescript@5.6.3))
@@ -20,6 +23,9 @@ importers:
       floating-vue:
         specifier: 5.2.2
         version: 5.2.2(vue@3.5.12(typescript@5.6.3))
+      livephotoskit:
+        specifier: ^1.5.6
+        version: 1.5.6
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -555,6 +561,11 @@ packages:
     peerDependenciesMeta:
       markdown-it:
         optional: true
+
+  '@namchee/vue-ztext@1.0.0':
+    resolution: {integrity: sha512-rensiNYrDY9+fNes+jxUDTfM5//0qRFaO3g14Yw4EF2J3b/aT430Psq/8/fdtXEDfoBRZw7lp/SuVTjZEqDpKA==}
+    peerDependencies:
+      vue: ^3.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1483,6 +1494,9 @@ packages:
 
   linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
+
+  livephotoskit@1.5.6:
+    resolution: {integrity: sha512-dsD6EzQnExuYfYvBSxf3t1bdl2Juw7NnlpWZrsGxdYq2x4pnxyOYrkOG6LGHmklytdFdxaru86GvviLpUhaIBQ==}
 
   load-tsconfig@0.2.5:
     resolution: {integrity: sha512-IXO6OCs9yg8tMKzfPZ1YmheJbZCiEsnBdcB03l0OcfK9prKnJb96siuHCr5Fl37/yo9DnKU+TLpxzTUspw9shg==}
@@ -2482,6 +2496,10 @@ snapshots:
       '@types/markdown-it': 14.1.2
     optionalDependencies:
       markdown-it: 14.1.0
+
+  '@namchee/vue-ztext@1.0.0(vue@3.5.12(typescript@5.6.3))':
+    dependencies:
+      vue: 3.5.12(typescript@5.6.3)
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3554,6 +3572,8 @@ snapshots:
   linkify-it@5.0.0:
     dependencies:
       uc.micro: 2.1.0
+
+  livephotoskit@1.5.6: {}
 
   load-tsconfig@0.2.5: {}
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { isDark } from '~/logics'
 
 function toTop() {
   window.scrollTo({
@@ -7,18 +6,19 @@ function toTop() {
     behavior: 'smooth',
   })
 }
+
 const { y: scroll } = useWindowScroll()
+
 </script>
 
 <template>
   <header class="header z-40">
     <RouterLink
-      class="w-12 h-12 absolute xl:fixed m-5 select-none outline-none"
+      class="h-12 absolute xl:fixed m-5 select-none outline-none"
       to="/"
       focusable="false"
     >
-      <img v-show="isDark" src="/logo-dark.svg?url" alt="logo">
-      <img v-show="!isDark" src="/logo.svg?url" alt="logo">
+      <Logo/>
     </RouterLink>
     <button
       title="Scroll to top"

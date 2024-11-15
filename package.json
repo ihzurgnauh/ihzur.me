@@ -10,9 +10,11 @@
   "dependencies": {
     "@lhlyu/vue-virtual-waterfall": "^1.0.6",
     "@vueuse/core": "^11.2.0",
+    "@namchee/vue-ztext":"^1.0.0",
     "dayjs": "^1.11.13",
     "floating-vue": "5.2.2",
     "nprogress": "^0.2.0",
+    "livephotoskit": "^1.5.6",
     "vue": "^3.5.12",
     "vue-router": "4.4.5",
     "vue-router-better-scroller": "^0.0.0"

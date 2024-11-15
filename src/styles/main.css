@@ -194,3 +194,13 @@ html:not(.dark) [img-dark] {
 .fade-leave-to {
   opacity: 0;
 }
+
+/* ZText */
+.z-text {
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: transform 1s;
+}
+
+[data-z]:hover .z-text {
+  transform: rotateX(-30deg) rotateY(30deg)
+}
