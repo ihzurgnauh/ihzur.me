@@ -25,7 +25,7 @@ hugo version # 查看版本，验证安装情况
 hugo new site blogDemo # 使用Hugo新建blogDemo项目，名称可自定义
 ```
 
-用 Hugo 创建的网站共有 7 个文件夹和 1 个文件，这些文件分别代表
+用 Hugo 创建的网站共有 7 个文件夹和 1 个文件，这些文件分别代表：
 
 - **archetypes**：存放用 hugo 命令新建的 Markdown 文件应用的 front matter 模版
 
@@ -46,7 +46,7 @@ hugo new site blogDemo # 使用Hugo新建blogDemo项目，名称可自定义
 >[!IMPORTANT]
 >创建完项目后,在使用`hugo`命令时，当前目录下必须要有配置文件，即`config.toml`
 
-然后进入 blogDemo目录可以看到网站的文件目录。
+新建完成后进入**blogDemo**目录可以看到网站的文件目录。
 
 ```bash
 cd blogDemo # 进入blogDemo目录
@@ -68,7 +68,7 @@ git clone https://github.com/olOwOlo/hugo-theme-even.git
 hugo server # 启动本地调试服务
 ```
 
-至此就可以在content下的post目录中添加文章，进行创作记录了。
+至此就可以在**content**下的**post**目录中添加文章，进行创作记录了。
 
 ```bash
 hugo new post/demo.md
@@ -84,4 +84,3 @@ hugo new post/demo.md
 hugo build # 生成静态网站
 hugo --minify # 生成静态网站并进行压缩，可减少产物大小，建议使用该命令
 ```
-

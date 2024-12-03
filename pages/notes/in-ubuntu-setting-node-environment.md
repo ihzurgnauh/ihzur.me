@@ -5,17 +5,17 @@ lang: zh
 ---
 [[toc]]
 
-### 1.安装nvm
+## 1.安装nvm
 
-这里使用nvm[^1]来进行node的版本控制
+为了后面可以方便的使用多个node版本，这里使用nvm[^1]来进行版本管理
 
-[^1]: [nvm](https://github.com/nvm-sh/nvm)是一个管理node.js版本的工具
+[^1]: [nvm](https://github.com/nvm-sh/nvm)是node.js的版本管理器，旨在按用户安装，并按shell调用。简而言之就是一个管理node.js版本的工具。
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash 
 ```
 
-使配置生效，这里使用了zsh
+使配置生效，具体的配置文件就按照所使用的shell，这里使用了[zsh](https://www.zsh.org/)
 
 ```bash
 source ~/.zshrc  
@@ -23,11 +23,11 @@ source ~/.zshrc
 
 验证nvm安装情况
 
-```
+```bash
 nvm -v
 ```
 
-### 2.安装node.js
+## 2.安装node.js
 
 列出node可用版本
 
@@ -35,13 +35,13 @@ nvm -v
 nvm ls-remote  
 ```
 
-安装指定版本，这里安装18.20.3
+可根据所列出的版本来选择安装，这里安装18.20.3
 
 ```bash
 nvm install 18.20.3 
 ```
 
-### 3.更换npm源
+## 3.更换npm源
 
 更换npm为国内源
 
@@ -49,7 +49,7 @@ nvm install 18.20.3
 npm config set registry https://registry.npmmirror.com 
 ```
 
-### 4.使用npm安装pnpm
+## 4.使用npm安装pnpm
 
 ```bash
 npm install -g pnpm 
