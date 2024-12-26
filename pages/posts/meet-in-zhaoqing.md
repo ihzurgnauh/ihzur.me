@@ -29,17 +29,21 @@ lang: zh
 
 五点四十多时，太阳已完全落下，空中只留下橘黄的晚霞。山上的人也陆续下去，我们便也跟着下去。天暗的很快，到山脚的时候天已经开始昏暗了。
 
-![](https://s2.loli.net/2024/12/03/eWANry1g4MBDkIK.jpg)
-
-![落日](https://s2.loli.net/2024/12/03/8DROX6g1FSLliUK.jpg)
+![17时40分](https://s2.loli.net/2024/12/03/eWANry1g4MBDkIK.jpg)
 
 
 湖面上的天空由浅黄，渐渐的变成橘黄，最后变成谈谈的暗橘色。橘色的长天，倒映在水面上，完全不像是这个季节该有的景象。
 
-![水面上的黄昏](https://s2.loli.net/2024/12/03/41KjJ6dEsvzBGND.jpg)
+<figure>
+  <div grid="~ cols-1 md:cols-2 gap-1">
+    <img src="https://s2.loli.net/2024/12/03/8DROX6g1FSLliUK.jpg" shadow important-m0 />
+    <img src="https://s2.loli.net/2024/12/03/41KjJ6dEsvzBGND.jpg" shadow important-m0 />
+  </div>
+  <figcaption text-center>黄昏时分</figcaption>
+</figure>
 
 
-天渐渐暗下来，水面上也仅剩一些余光。我们边走边聊，偶有几只小猫出没，时不时的窜进路旁的草里。“那里有一只猫。”，马老师看向草地上一团黑影说。走过去一看，是个矮的木箱，便象征性的摸了摸箱子。
+天渐渐暗下来，水面上也仅剩一些余光。我们边走边聊，偶有几只小猫出没，时不时的窜进路旁的草里。“那里有一只猫”，马老师看向草地上一团黑影说。走过去一看，是个矮的木箱，便象征性的摸了摸箱子。
 
 ![金色的湖](https://s2.loli.net/2024/12/03/Qoa5HKNVfBA8R4G.jpg)
 
