@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <div style="line-height: 1.75;">
-    <div class="border-solid border-1 border-#9999 rounded-md hover:border-dashed transition-all">
+    <div class="border-solid border-1 border-#9999 rounded-md hover:scale-109 transition-all">
       <div class="m-4 tracking-wide">
         <span>{{ item.content }}</span>
         <br/>
