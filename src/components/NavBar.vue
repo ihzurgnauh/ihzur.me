@@ -18,7 +18,7 @@ const { y: scroll } = useWindowScroll()
       to="/"
       focusable="false"
     >
-      <Logo class="ml-3 mr-3 hover:animate-rubber-band"/>
+      <Logo class="ml-3 mr-3 animate-rubber-band active:animate-none"/>
     </RouterLink>
     <button
       title="Scroll to top"
