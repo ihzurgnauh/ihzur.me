@@ -1,5 +1,6 @@
 ---
-background: plum
+description: ihzurgnauh's blog
+background: random
 ---
 
 *<h1>ihzurgnauh</h1>*

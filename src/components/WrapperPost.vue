@@ -72,9 +72,15 @@ onMounted(() => {
 
 const BgComponent = computed(() => {
   let bg = frontmatter.background
+  if (bg === 'random') {
+    bg = Math.random() > 0.5 ? 'plum' : 'stars'
+  }
   if (typeof window !== 'undefined') {
     if (bg === 'plum') {
       return defineAsyncComponent(() => import('./Plum.vue'))
+    }
+    else if (bg === 'stars') {
+      return defineAsyncComponent(() => import('./Stars.vue'))
     }
   }
   return undefined
