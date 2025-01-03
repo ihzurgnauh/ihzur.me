@@ -1,5 +1,5 @@
 <template>
-  <div class="stars w-screen h-88vh top-12 fixed opacity-85">
+  <div class="stars w-screen h-88vh top-12 fixed opacity-85" style="z-index: -1">
     <div class="h-px w-px rounded-full bg-transparent" />
     <div class="h-1.7px w-1.7px rounded-full bg-transparent" />
     <div class="h-1.3px w-1.3px rounded-full bg-transparent" />
