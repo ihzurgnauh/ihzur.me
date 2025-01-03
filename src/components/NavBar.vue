@@ -9,6 +9,8 @@ function toTop() {
 
 const { y: scroll } = useWindowScroll()
 
+const showEmail = ref(false)
+
 </script>
 
 <template>
@@ -49,8 +51,18 @@ const { y: scroll } = useWindowScroll()
         <a href="https://github.com/ihzurgnauh" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-line-md-github />
         </a>
-        <a href="mailto:zhiruhuang7@gmail.com" target="_blank" title="Email">
+        <a @click="showEmail = true" target="_blank" title="Email">
           <div i-line-md-email />
+          <Teleport to="body">
+            <modal :show="showEmail" @close="showEmail = false">
+              <template #body>
+                <em>
+                  <a href="mailto:zhiruhuang7@gmail.com" class="ml-3px"><i i-iconoir-send-mail/></a>: 
+                  <TextCopy inline>zhiruhuang7@gmail.com</TextCopy>
+                </em>
+              </template>
+            </modal>
+          </Teleport>
         </a>
         <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
           <div i-ic-sharp-rss-feed />
