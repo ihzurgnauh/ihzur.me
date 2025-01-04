@@ -20,7 +20,7 @@ const showEmail = ref(false)
       to="/"
       focusable="false"
     >
-      <Logo class="ml-3 mr-3 animate-rubber-band active:animate-none"/>
+      <Logo class="ml-3 mr-3"/>
     </RouterLink>
     <button
       title="Scroll to top"
@@ -57,7 +57,9 @@ const showEmail = ref(false)
             <modal :show="showEmail" @close="showEmail = false">
               <template #body>
                 <em>
-                  <a href="mailto:zhiruhuang7@gmail.com" class="ml-3px"><i i-iconoir-send-mail/></a>: 
+                  <a href="mailto:zhiruhuang7@gmail.com" class="ml-3px">
+                    <i i-iconoir-send-mail class="@hover:animate-swing"/>
+                  </a>: 
                   <TextCopy inline>zhiruhuang7@gmail.com</TextCopy>
                 </em>
               </template>
