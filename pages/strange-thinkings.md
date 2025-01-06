@@ -5,5 +5,5 @@ subtitle: 想象是灵魂的眼睛
 background: stars
 ---
 
-<WrapperThingList></WrapperThingList>
+<ThinkingWall></ThinkingWall>
 

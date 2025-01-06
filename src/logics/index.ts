@@ -1,5 +1,8 @@
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
+import { defaultWindow, watchThrottled, unrefElement } from '@vueuse/core'
+import type { MaybeElementRef, MouseInElementOptions } from '@vueuse/core'
+import { createSharedComposable, useMouse } from '@vueuse/core'
 
 dayjs.locale('zh-cn')
 
@@ -51,6 +54,57 @@ export function toggleDark(event: MouseEvent) {
         },
       )
     })
+}
+
+
+const useSharedMouse = createSharedComposable(useMouse)
+
+export function useSharedMouseInElement(
+  target?: MaybeElementRef,
+  options: MouseInElementOptions = {}
+) {
+  const { x, y } = useSharedMouse(options)
+
+  const targetRef = ref(target ?? window?.document.body)
+  const elementX = ref(9999)
+  const elementY = ref(9999)
+
+  if (defaultWindow) {
+    watchThrottled(
+      [targetRef, x, y],
+      () => {
+        const el = unrefElement(targetRef)
+        if (!el) {
+          return
+        }
+
+        if(defaultWindow!.screen?.width <= 800) {
+          return
+        }
+
+        const { left, top } = el.getBoundingClientRect()
+
+        const eX = x.value - (left + defaultWindow!.scrollX)
+        const eY = y.value - (top + defaultWindow!.scrollY)
+
+        // We don't update the value when the mouse to too far away
+        if (Math.abs(eX) > 1500 || Math.abs(eY) > 1500) {
+          return
+        }
+
+        elementX.value = eX
+        elementY.value = eY
+      },
+      { immediate: true, throttle: 50 }
+    )
+  }
+
+  return {
+    x,
+    y,
+    elementX,
+    elementY
+  }
 }
 
 export function formatDate(d: string | Date, onlyDate = true) {
