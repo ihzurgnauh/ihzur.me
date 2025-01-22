@@ -5,7 +5,7 @@
   --twoslash-border-color: #8884;
 }
 .dark .shiki {
-  background-color: #262628;
+  background-color: #2626286e;
 }
 
 html:not(.dark) .shiki {
