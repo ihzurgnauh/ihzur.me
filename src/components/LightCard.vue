@@ -33,7 +33,7 @@ const { elementX, elementY} = useSharedMouseInElement(el);
 <template>
   <div
     ref="el"
-    class="relative rounded-14px border-1 border-#fff dark:border-#1c1c1d"
+    class="relative rounded-3.5 border-1 border-#fff dark:border-#1c1c1d"
     :style="{
       '--x': `${elementX}px`,
       '--y': `${elementY}px`,
@@ -42,7 +42,7 @@ const { elementX, elementY} = useSharedMouseInElement(el);
         : `radial-gradient(130px at var(--x) var(--y), var(--rg-color), transparent)`
     }"
   >
-    <div style="line-height: 1.75;" class="card-shadow border-1 border-#00000000 m-2px rounded-12px dark:bg-#1c1c1df2 bg-#fff bg-op-86">
+    <div style="line-height: 1.75;" class="card-shadow border-1 border-#00000000 m-0.5 rounded-3 dark:bg-#1c1c1df2 bg-#fff bg-op-86">
       <div class="m-4 tracking-wide">
         <div>{{ item.content }}</div>
         <div>
