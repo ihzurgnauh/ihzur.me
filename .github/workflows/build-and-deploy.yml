@@ -17,22 +17,20 @@ jobs:
     - name: Checkout codes
       uses: actions/checkout@v4
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+
     - name: Setup node
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.1'
-
-    - name: Cache node modules
-      uses: actions/cache@v4
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        cache: 'pnpm'
 
     - name: Install dependencies
-      run: npm install --force
+      run: pnpm install --frozen-lockfile
 
     - name: Build
-      run: npm run build
+      run: pnpm run build
 
     - name: Deploy blog
       env: 
