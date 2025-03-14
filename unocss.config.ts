@@ -1,4 +1,11 @@
-import { defineConfig, presetAttributify, presetIcons, presetUno, presetWebFonts, transformerDirectives } from 'unocss'
+import { 
+  defineConfig,
+  presetAttributify,
+  presetIcons,
+  presetWind3,
+  presetWebFonts,
+  transformerDirectives
+} from 'unocss'
 
 export default defineConfig({
   shortcuts: [
@@ -24,21 +31,12 @@ export default defineConfig({
       },
     }),
     presetAttributify(),
-    presetUno(),
+    presetWind3(),
     presetWebFonts({
       fonts: {
         sans: 'Inter',
         mono: 'DM Mono',
-        LXGWWenKai: [
-          {
-            name: 'LXGW WenKai',
-            weights: ['400', '600'],
-          },
-          {
-            name: 'serif',
-            provider: 'none',
-          },
-        ]
+        LXGWWenKai: 'LXGW WenKai'
       },
     }),
   ],
