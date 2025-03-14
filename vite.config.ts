@@ -17,13 +17,14 @@ import UnoCSS from 'unocss/vite'
 import SVG from 'vite-svg-loader'
 import MarkdownItShiki from '@shikijs/markdown-it'
 import { rendererRich, transformerTwoslash } from '@shikijs/twoslash'
-import GitHubAlerts from 'markdown-it-github-alerts'
 import Footnote from 'markdown-it-footnote'
-import { figure } from "@mdit/plugin-figure";
+import { figure } from "@mdit/plugin-figure"
 import { slugify } from './scripts/slugify'
 
 // @ts-expect-error missing types
 import TOC from 'markdown-it-table-of-contents'
+// @ts-expect-error missing types
+import GitHubAlerts from 'markdown-it-github-alerts'
 
 const promises: Promise<any>[] = []
 
