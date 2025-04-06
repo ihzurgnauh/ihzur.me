@@ -20,11 +20,10 @@ import { rendererRich, transformerTwoslash } from '@shikijs/twoslash'
 import Footnote from 'markdown-it-footnote'
 import { figure } from "@mdit/plugin-figure"
 import { slugify } from './scripts/slugify'
+import GitHubAlerts from 'markdown-it-github-alerts'
 
 // @ts-expect-error missing types
 import TOC from 'markdown-it-table-of-contents'
-// @ts-expect-error missing types
-import GitHubAlerts from 'markdown-it-github-alerts'
 
 const promises: Promise<any>[] = []
 
