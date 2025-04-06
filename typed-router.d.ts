@@ -20,7 +20,7 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...404]': RouteRecordInfo<'/[...404]', '/:404(.*)', { 404: ParamValue<true> }, { 404: ParamValue<false> }>,
-    '/bookmarks': RouteRecordInfo<'/bookmarks', '/bookmarks', Record<never, never>, Record<never, never>>,
+    '/media': RouteRecordInfo<'/media', '/media', Record<never, never>, Record<never, never>>,
     '/notes/': RouteRecordInfo<'/notes/', '/notes', Record<never, never>, Record<never, never>>,
     '/notes/hugo-build-static-blog': RouteRecordInfo<'/notes/hugo-build-static-blog', '/notes/hugo-build-static-blog', Record<never, never>, Record<never, never>>,
     '/notes/setting-node-environment-in-ubuntu': RouteRecordInfo<'/notes/setting-node-environment-in-ubuntu', '/notes/setting-node-environment-in-ubuntu', Record<never, never>, Record<never, never>>,

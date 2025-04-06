@@ -45,8 +45,8 @@ const showEmail = ref(false)
           <span class="lt-md:hidden">奇思</span>
           <div i-line-md-watch-loop md:hidden />
         </RouterLink>
-        <RouterLink to="/bookmarks" title="书签">
-          <div i-mingcute-bookmarks-line />
+        <RouterLink to="/media" title="书影">
+          <div i-nrk-media-soundwave />
         </RouterLink>
         <a href="https://github.com/ihzurgnauh" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-line-md-github />

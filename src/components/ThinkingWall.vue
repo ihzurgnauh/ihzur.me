@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { render, h } from 'vue'
 import LightCard from './LightCard.vue';
-import thinkingData  from '../static/thinking-data.json';
+import thinkingData  from '../../data/thinking.json';
 
 
 // 计算真实高度

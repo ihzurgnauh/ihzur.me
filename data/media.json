@@ -1,0 +1,196 @@
+{
+    "book": [
+        {
+            "name": "我与地坛",
+            "author": "史铁生",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "病隙随笔",
+            "author": "史铁生",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "人间草木",
+            "author": "汪曾琪",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "The Dictator's Handbook",
+            "author": "Bruce Bueno de Mesquita",
+            "state": "todo",
+            "lang": "en"
+        },
+        {
+            "name": "万历十五年",
+            "author": "黄仁宇",
+            "state": "todo",
+            "lang": "zh"
+        },
+        {
+            "name": "且介亭杂文",
+            "author": "鲁迅",
+            "state": "todo",
+            "lang": "zh"
+        }
+    ],
+    "movie": [
+        {
+            "name": "Interstellar",
+            "author": "Christopher Nolan",
+            "date": "2014",
+            "state": "done",
+            "lang": "en"
+        },
+        {
+            "name": "让子弹飞",
+            "author": "姜文",
+            "date": "2010",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "功夫",
+            "author": "周星驰",
+            "date": "2004",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "Oppenheimer",
+            "author": "Christopher Nolan",
+            "date": "2023",
+            "state": "todo",
+            "lang": "en"
+        },
+        {
+            "name": "Saving Private Ryan",
+            "author": "Steven Spielberg",
+            "date": "1998",
+            "state": "done",
+            "lang": "en"
+        },
+        {
+            "name": "魁拔之十万火急",
+            "author": "王川",
+            "date": "2011",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "魁拔之大战元泱界",
+            "author": "王川",
+            "date": "2013",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "魁拔Ⅲ战神崛起",
+            "author": "王川",
+            "date": "2014",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "芙蓉镇",
+            "author": "谢晋",
+            "date": "1987",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "Dune",
+            "author": "Denis Villeneuve",
+            "date": "2021",
+            "state": "done",
+            "lang": "en"
+        },
+        {
+            "name": "Dune: Part Two",
+            "author": "Denis Villeneuve",
+            "date": "2024",
+            "state": "done",
+            "lang": "en"
+        },
+        {
+            "name": "Le Chant du loup",
+            "author": "Antonin Baudry",
+            "date": "2019",
+            "state": "done",
+            "lang": "fr"
+        },
+        {
+            "name": "我不是药神",
+            "author": "文牧野",
+            "date": "2018",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "1917",
+            "author": "Sam Mendes",
+            "date": "2019",
+            "state": "done",
+            "lang": "en"
+        },
+        {
+            "name": "Léon",
+            "author": "Luc Besson",
+            "date": "1994",
+            "state": "done",
+            "lang": "fr"
+        },
+        {
+            "name": "破·地獄",
+            "author": "陈茂贤",
+            "date": "2024",
+            "state": "done",
+            "lang": "zh"
+        },
+        {
+            "name": "Mon ami robot",
+            "author": "Pablo Berger",
+            "date": "2023",
+            "state": "todo",
+            "lang": "fr"
+        },
+        {
+            "name": "Das Leben der Anderen",
+            "author": "Florian Henckel von Donnersmarck",
+            "date": "2006",
+            "state": "todo",
+            "lang": "de"
+        },
+        {
+            "name": "기생충",
+            "author": "봉준호",
+            "date": "2019",
+            "state": "todo",
+            "lang": "ko"
+        },
+        {
+            "name": "おくりびと",
+            "author": "たきた・ようじろう",
+            "date": "2008",
+            "state": "todo",
+            "lang": "ja"
+        },
+        {
+            "name": "阳光灿烂的日子",
+            "author": "姜文",
+            "date": "1994",
+            "state": "todo",
+            "lang": "zh"
+        },
+        {
+            "name": "活着",
+            "author": "张艺谋",
+            "date": "1994",
+            "state": "todo",
+            "lang": "zh"
+        }
+    ]
+}
