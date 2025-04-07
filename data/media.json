@@ -35,6 +35,12 @@
             "author": "鲁迅",
             "state": "todo",
             "lang": "zh"
+        },
+        {
+            "name": "One Man's View of the World",
+            "author": "Lee Kuan Yew",
+            "state": "todo",
+            "lang": "en"
         }
     ],
     "movie": [
