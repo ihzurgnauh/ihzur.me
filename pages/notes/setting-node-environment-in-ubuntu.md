@@ -49,7 +49,7 @@ nvm install 18.20.3
 npm config set registry https://registry.npmmirror.com 
 ```
 
-## 4.使用npm安装pnpm
+## 4.安装pnpm
 
 ```bash
 npm install -g pnpm 
