@@ -3,6 +3,7 @@ import 'dayjs/locale/zh-cn'
 import { defaultWindow, watchThrottled, unrefElement } from '@vueuse/core'
 import type { MaybeElementRef, MouseInElementOptions } from '@vueuse/core'
 import { createSharedComposable, useMouse } from '@vueuse/core'
+import type { LunarDate } from '~/types'
 
 dayjs.locale('zh-cn')
 
@@ -114,15 +115,7 @@ export function formatDate(d: string | Date, onlyDate = true) {
   return date.format('LL')
 }
 
-export function lunarCalendar(d: string | Date) {
-  const lunar: {
-    year: string,
-    month: string,
-    day: string,
-    season: string | undefined
-    date: string
-  } = { year: '', month: '', day: '', season: '', date: ''}
-
+export function lunarCalendar(d: string | Date): LunarDate {
   const lunarDayDic = [
     '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
     '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
@@ -133,16 +126,22 @@ export function lunarCalendar(d: string | Date) {
   const lunarCalendarString = new Date(d).toLocaleString('zh-CN-u-ca-chinese')
   const monthIndex = lunarCalendarString?.indexOf('月')
   // 干支年
-  lunar.year = sexagenaryCycleYear(Number.parseInt(lunarCalendarString?.slice(0, 4)))
+  const year = sexagenaryCycleYear(Number.parseInt(lunarCalendarString?.slice(0, 4)))
   // 农历月
-  lunar.month = lunarCalendarString?.slice(5, monthIndex + 1)?.replace('十一月', '冬月')
+  const month = lunarCalendarString?.slice(5, monthIndex + 1)?.replace('十一月', '冬月')
   // 农历日
-  lunar.day = lunarDayDic[Number.parseInt(lunarCalendarString?.slice(monthIndex + 1, lunarCalendarString?.indexOf(' '))) - 1]
+  const day = lunarDayDic[Number.parseInt(lunarCalendarString?.slice(monthIndex + 1, lunarCalendarString?.indexOf(' '))) - 1]
   // 季节
-  lunar.season = lunarMonthToSeason(lunar.month)
+  const season = lunarMonthToSeason(month)
   // 月日
-  lunar.date = lunar.month + lunar.day
-  return lunar
+  const date = month + day
+  return { 
+    year, 
+    month, 
+    day, 
+    season, 
+    date 
+  }
 }
 
 /**
@@ -150,7 +149,7 @@ export function lunarCalendar(d: string | Date) {
  * @param year 农历年份
  * @returns 干支纪年
  */
-function sexagenaryCycleYear(year: number) {
+function sexagenaryCycleYear(year: number): string {
   // 天干
   const heavenlyStemMap = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
   // 地支
@@ -168,12 +167,12 @@ function sexagenaryCycleYear(year: number) {
   return `${heavenlyStem + earthlyBranch}年`
 }
 
-function lunarMonthToSeason(m: string) {
+function lunarMonthToSeason(m: string): string {
   const seasonMap = new Map([
     ['正月', '初春'],['二月', '仲春'],['三月', '暮春'],
     ['四月', '初夏'],['五月', '仲夏'],['六月', '季夏'],
     ['七月', '初秋'],['八月', '仲秋'],['九月', '深秋'],
     ['十月', '初冬'],['冬月', '仲冬'],['腊月', '季冬']
   ])
-  return seasonMap.get(m)
+  return seasonMap.get(m) ?? m
 }

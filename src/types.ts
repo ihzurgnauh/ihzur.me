@@ -20,3 +20,11 @@ export interface MediaRecord {
   lang?: string
 }
 
+export interface LunarDate {
+  year: string;
+  month: string;
+  day: string;
+  season?: string;
+  date: string;
+}
+
