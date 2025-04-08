@@ -128,7 +128,7 @@ export function lunarCalendar(d: string | Date): LunarDate {
   // 干支年
   const year = sexagenaryCycleYear(Number.parseInt(lunarCalendarString?.slice(0, 4)))
   // 农历月
-  const month = lunarCalendarString?.slice(5, monthIndex + 1)?.replace('十一月', '冬月')
+  const month = lunarCalendarString?.slice(5, monthIndex + 1)?.replace('十一', '冬')
   // 农历日
   const day = lunarDayDic[Number.parseInt(lunarCalendarString?.slice(monthIndex + 1, lunarCalendarString?.indexOf(' '))) - 1]
   // 季节
@@ -168,11 +168,14 @@ function sexagenaryCycleYear(year: number): string {
 }
 
 function lunarMonthToSeason(m: string): string {
+  // 闰月视为前一个月的延续，使用原基础月获取季节
+  const baseMonth = m.replace(/^闰/, '')
+
   const seasonMap = new Map([
     ['正月', '初春'],['二月', '仲春'],['三月', '暮春'],
     ['四月', '初夏'],['五月', '仲夏'],['六月', '季夏'],
     ['七月', '初秋'],['八月', '仲秋'],['九月', '深秋'],
     ['十月', '初冬'],['冬月', '仲冬'],['腊月', '季冬']
   ])
-  return seasonMap.get(m) ?? m
+  return seasonMap.get(baseMonth) ?? m
 }
