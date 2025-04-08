@@ -36,7 +36,10 @@ export default defineConfig({
       fonts: {
         sans: 'Inter',
         mono: 'DM Mono',
-        LXGWWenKai: 'LXGW WenKai'
+        LXGWWenKai: {
+          name: 'LXGW WenKai',
+          provider: 'none',
+        },
       },
     }),
   ],
