@@ -31,6 +31,14 @@ export const createApp = ViteSSG(
     app.use(VueVirtualWaterfall)
     
     if (isClient) {
+      
+      // Bypass Vite's build analysis
+      const script = document.createElement('script')
+      script.type = 'module'
+      script.src = 'https://instant.page/5.2.0'
+      script.integrity = 'sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z'
+      document.head.appendChild(script)
+
       const html = document.querySelector('html')!
       setupRouterScroller(router, {
         selectors: {
