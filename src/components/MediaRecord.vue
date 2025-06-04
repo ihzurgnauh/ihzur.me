@@ -23,14 +23,18 @@
     </div>
  
     <template v-for="t of Object.keys(media)" :key="t">
-      <table v-show="type === t" lang="zh" font-400 lg-md="mr--20 w-[calc(100%+5rem)]!">
+      <table v-show="type === t" lang="zh" font-400>
         <tbody>
           <template v-for="m of media[type]" :key="m.name">
             <tr v-bind="m.lang ? { lang: m.lang } : {}">
               <td>{{ m.name }}</td>
               <td text-right>{{ m.author }}</td>
-              <td lt-sm:hidden>{{ m.date }}</td>
-              <td>{{ m.note}}</td>
+              <td v-if="m.date" lt-sm:hidden>
+                {{ m.date }}
+              </td>
+              <td v-if="m.note" lt-sm:hidden>
+                {{ m.note }}
+              </td>
             </tr>
           </template>
         </tbody>
