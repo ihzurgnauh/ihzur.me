@@ -24,8 +24,6 @@ async function run() {
 
 async function buildBlogRSS() {
   const postFiles = await fg('pages/posts/*.md')
-  const noteFiles = await fg('pages/notes/*.md')
-  const allFiles = [...postFiles, ...noteFiles]
 
   const options = {
     title: 'ihzurgnauh',
@@ -41,7 +39,7 @@ async function buildBlogRSS() {
   }
   const posts: any[] = (
     await Promise.all(
-      allFiles.filter(i => !i.includes('index'))
+      postFiles.filter(i => !i.includes('index'))
         .map(async (i) => {
           const raw = await fs.readFile(i, 'utf-8')
           const { data, content } = matter(raw)
