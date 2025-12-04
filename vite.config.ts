@@ -27,6 +27,11 @@ import TOC from 'markdown-it-table-of-contents'
 
 const promises: Promise<any>[] = []
 
+const BLURHASH_MAP = fs.readJSONSync(
+  resolve(process.cwd(), 'data/blurhash-map.json'), 
+  { throws: false }
+) || {}
+
 export default defineConfig({
   resolve: {
     alias: [
@@ -121,6 +126,26 @@ export default defineConfig({
         md.use(Footnote)
 
         md.use(figure)
+
+        // Save default renderer
+        const defaultImageRule = md.renderer.rules.image || function (tokens, idx, options, env, self) {
+          return self.renderToken(tokens, idx, options)
+        }
+
+        md.renderer.rules.image = (tokens, idx, options, env, self) => {
+          const token = tokens[idx]
+          const src = token.attrGet('src') || ''
+          const alt = token.content || token.attrGet('alt') || ''
+          
+          const hash = BLURHASH_MAP[src]
+
+          if (hash) {
+            return `<BlurImage src="${src}" alt="${alt}" hash="${hash}" />`
+          }
+
+          // No hash found, use default rendering
+          return defaultImageRule(tokens, idx, options, env, self)
+        }
       }
     }),
 

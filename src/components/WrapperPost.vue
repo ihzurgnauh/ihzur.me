@@ -128,7 +128,7 @@ const BgComponent = computed(() => {
       :to="route.path.split('/').slice(0, -1).join('/') || '/'"
       class="op50 hover:op75"
     >
-      {{ '返回 ..' }}
+      {{ 'cd ..' }}
     </RouterLink>
   </div>
 </template>
