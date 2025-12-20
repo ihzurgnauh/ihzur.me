@@ -126,25 +126,55 @@ export default defineConfig({
         md.use(Footnote)
 
         md.use(figure)
-
+        
         // Save default renderer
-        const defaultImageRule = md.renderer.rules.image || function (tokens, idx, options, env, self) {
-          return self.renderToken(tokens, idx, options)
+        const defaultImageRule = md.renderer.rules.image || ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options))
+        const defaultHtmlBlockRule = md.renderer.rules.html_block || ((tokens, idx) => tokens[idx].content)
+        const defaultHtmlInlineRule = md.renderer.rules.html_inline || ((tokens, idx) => tokens[idx].content)
+
+        const replaceImgWithBlurHash = (content: string) => {
+          return content.replace(/<img([^>]+)>/gi, (match, attrs) => {
+            const srcMatch = attrs.match(/src=["']([^"']+)["']/)
+            const altMatch = attrs.match(/alt=["']([^"']+)["']/)
+
+            const src = srcMatch ? srcMatch[1] : ''
+            const alt = altMatch ? altMatch[1] : ''
+            const hash = BLURHASH_MAP[src]
+
+            if (hash) {
+              return `<BlurImage src="${src}" alt="${alt}" hash="${hash}" />`
+            }
+            return match
+          })
         }
 
         md.renderer.rules.image = (tokens, idx, options, env, self) => {
           const token = tokens[idx]
           const src = token.attrGet('src') || ''
           const alt = token.content || token.attrGet('alt') || ''
-          
           const hash = BLURHASH_MAP[src]
 
           if (hash) {
             return `<BlurImage src="${src}" alt="${alt}" hash="${hash}" />`
           }
 
-          // No hash found, use default rendering
           return defaultImageRule(tokens, idx, options, env, self)
+        }
+
+        md.renderer.rules.html_block = (tokens, idx, options, env, self) => {
+          const content = tokens[idx].content
+          if (content.includes('<img')) {
+            return replaceImgWithBlurHash(content)
+          }
+          return defaultHtmlBlockRule(tokens, idx, options, env, self)
+        }
+
+        md.renderer.rules.html_inline = (tokens, idx, options, env, self) => {
+          const content = tokens[idx].content
+          if (content.includes('<img')) {
+            return replaceImgWithBlurHash(content)
+          }
+          return defaultHtmlInlineRule(tokens, idx, options, env, self)
         }
       }
     }),
