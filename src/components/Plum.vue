@@ -1,148 +1,148 @@
-<script setup lang='ts'>
-import type { Fn } from '@vueuse/core'
+<script setup lang="ts">
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useWindowSize, useRafFn } from '@vueuse/core'
 
-const r180 = Math.PI
-const r90 = Math.PI / 2
-const r15 = Math.PI / 12
-const color = '#88888825'
+const { PI, cos, sin, random } = Math
+const R180 = PI
+const R90 = PI / 2
+const R15 = PI / 12
+const COLOR = '#88888825'
+const MIN_BRANCH = 27
+const FPS_INTERVAL = 1000 / 40
+
+interface BranchTask {
+  x: number
+  y: number
+  rad: number
+  counter: { value: number }
+}
 
 const el = ref<HTMLCanvasElement | null>(null)
-
-const { random } = Math
 const size = reactive(useWindowSize())
-
-const start = ref<Fn>(() => {})
-const MIN_BRANCH = 27
-const len = ref(6)
 const stopped = ref(false)
+const len = ref(6)
 
-function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
-  const ctx = canvas.getContext('2d')!
+let steps: BranchTask[] = []
+let prevSteps: BranchTask[] = []
+let ctx: CanvasRenderingContext2D
+let lastTime = performance.now()
 
+function initCanvas(canvas: HTMLCanvasElement, width: number, height: number) {
+  const _ctx = canvas.getContext('2d', { alpha: true })!
   const dpr = window.devicePixelRatio || 1
-  // @ts-expect-error vendor
-  const bsr = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
-
-  const dpi = _dpi || dpr / bsr
-
+  
   canvas.style.width = `${width}px`
   canvas.style.height = `${height}px`
-  canvas.width = dpi * width
-  canvas.height = dpi * height
-  ctx.scale(dpi, dpi)
-
-  return { ctx, dpi }
+  canvas.width = width * dpr
+  canvas.height = height * dpr
+  _ctx.scale(dpr, dpr)
+  return _ctx
 }
 
-function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
-  const dx = r * Math.cos(theta)
-  const dy = r * Math.sin(theta)
-  return [x + dx, y + dy]
-}
+const executeStep = (task: BranchTask, width: number, height: number) => {
+  const { x, y, rad, counter } = task
+  const length = random() * len.value
+  counter.value += 1
 
-onMounted(async () => {
-  const canvas = el.value!
-  const { ctx } = initCanvas(canvas, size.width, size.height)
-  const { width, height } = canvas
+  const nx = x + length * cos(rad)
+  const ny = y + length * sin(rad)
 
-  let steps: Fn[] = []
-  let prevSteps: Fn[] = []
+  ctx.beginPath()
+  ctx.moveTo(x, y)
+  ctx.lineTo(nx, ny)
+  ctx.stroke()
 
-  const step = (x: number, y: number, rad: number, counter: { value: number } = { value: 0 }) => {
-    const length = random() * len.value
-    counter.value += 1
-
-    const [nx, ny] = polar2cart(x, y, length, rad)
-
-    ctx.beginPath()
-    ctx.moveTo(x, y)
-    ctx.lineTo(nx, ny)
-    ctx.stroke()
-
-    const rad1 = rad + random() * r15
-    const rad2 = rad - random() * r15
-
-    // out of bounds
-    if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100)
-      return
-
-    const rate = counter.value <= MIN_BRANCH
-      ? 0.8
-      : 0.5
-
-    // left branch
-    if (random() < rate)
-      steps.push(() => step(nx, ny, rad1, counter))
-
-    // right branch
-    if (random() < rate)
-      steps.push(() => step(nx, ny, rad2, counter))
+  // Bounds check
+  if (nx < -100 || nx > width + 100 || ny < -100 || ny > height + 100) {
+    return
   }
 
-  let lastTime = performance.now()
-  const interval = 1000 / 40 // 50fps
+  const rate = counter.value <= MIN_BRANCH ? 0.8 : 0.5
 
-  let controls: ReturnType<typeof useRafFn>
+  if (random() < rate) {
+    steps.push({ x: nx, y: ny, rad: rad + random() * R15, counter })
+  }
+    
+  if (random() < rate) {
+    steps.push({ x: nx, y: ny, rad: rad - random() * R15, counter })
+  }
+  
+}
 
-  const frame = () => {
-    if (performance.now() - lastTime < interval)
-      return
+const { pause, resume } = useRafFn(() => {
+  const now = performance.now()
+  const elapsed = now - lastTime
 
-    prevSteps = steps
-    steps = []
-    lastTime = performance.now()
+  if (elapsed < FPS_INTERVAL) return
 
-    if (!prevSteps.length) {
-      controls.pause()
-      stopped.value = true
+  if (steps.length === 0 && prevSteps.length === 0) {
+    stopped.value = true
+    pause()
+    return
+  }
+
+  lastTime = now - (elapsed % FPS_INTERVAL)
+
+  prevSteps = steps
+  steps = []
+
+  // Cache window size to avoid repeated Proxy access
+  const currentW = size.width
+  const currentH = size.height
+
+  for (let i = 0; i < prevSteps.length; i++) {
+    const task = prevSteps[i]
+    if (random() < 0.5) {
+      steps.push(task)
+    } else {
+      executeStep(task, currentW, currentH)
     }
-
-    // Execute all the steps from the previous frame
-    prevSteps.forEach((i) => {
-      // 50% chance to keep the step for the next frame, to create a more organic look
-      if (random() < 0.5)
-        steps.push(i)
-      else
-        i()
-    })
   }
+}, { immediate: false })
 
-  controls = useRafFn(frame, { immediate: false })
-
-  /**
-   * 0.2 - 0.8
-   */
+const start = () => {
+  if (!el.value) return
+  pause()
+  
+  ctx = initCanvas(el.value, size.width, size.height)
+  ctx.lineWidth = 1
+  ctx.strokeStyle = COLOR
+  
+  lastTime = performance.now()
+  prevSteps = []
+  
   const randomMiddle = () => random() * 0.6 + 0.2
+  
+  steps = [
+    { x: randomMiddle() * size.width, y: -5, rad: R90, counter: { value: 0 } },
+    { x: randomMiddle() * size.width, y: size.height + 5, rad: -R90, counter: { value: 0 } },
+    { x: -5, y: randomMiddle() * size.height, rad: 0, counter: { value: 0 } },
+    { x: size.width + 5, y: randomMiddle() * size.height, rad: R180, counter: { value: 0 } },
+  ]
 
-  start.value = () => {
-    controls.pause()
-    ctx.clearRect(0, 0, width, height)
-    ctx.lineWidth = 1
-    ctx.strokeStyle = color
-    prevSteps = []
-    steps = [
-      () => step(randomMiddle() * size.width, -5, r90),
-      () => step(randomMiddle() * size.width, size.height + 5, -r90),
-      () => step(-5, randomMiddle() * size.height, 0),
-      () => step(size.width + 5, randomMiddle() * size.height, r180),
-    ]
-    if (size.width < 500)
-      steps = steps.slice(0, 2)
-    controls.resume()
-    stopped.value = false
+  if (size.width < 500) steps = steps.slice(0, 2)
+  
+  stopped.value = false
+  resume()
+}
+
+onMounted(start)
+
+const maskStyle = computed(() => {
+  const mask = 'radial-gradient(circle, transparent, black)'
+  return {
+    maskImage: mask,
+    WebkitMaskImage: mask
   }
-
-  start.value()
 })
-const mask = computed(() => 'radial-gradient(circle, transparent, black);')
 </script>
 
 <template>
   <div
-    class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
+    class="fixed inset-0 pointer-events-none print:hidden"
     style="z-index: -1"
-    :style="`mask-image: ${mask};--webkit-mask-image: ${mask};`"
+    :style="maskStyle"
   >
-    <canvas ref="el" width="400" height="400" />
+    <canvas ref="el" />
   </div>
 </template>
