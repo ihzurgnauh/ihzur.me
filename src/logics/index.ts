@@ -4,6 +4,7 @@ import { defaultWindow, watchThrottled, unrefElement } from '@vueuse/core'
 import type { MaybeElementRef, MouseInElementOptions } from '@vueuse/core'
 import { createSharedComposable, useMouse } from '@vueuse/core'
 import type { LunarDate } from '~/types'
+import { lunisolar } from 'tinylunar'
 
 dayjs.locale('zh-cn')
 
@@ -117,55 +118,27 @@ export function formatDate(d: string | Date, onlyDate = true) {
 }
 
 export function lunarCalendar(d: string | Date): LunarDate {
-  const lunarDayDic = [
-    '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
-    '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
-    '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'
-  ]
 
-  // 获取农历日期
-  const lunarCalendarString = new Date(d).toLocaleString('zh-CN-u-ca-chinese')
-  const monthIndex = lunarCalendarString?.indexOf('月')
-  // 干支年
-  const year = sexagenaryCycleYear(Number.parseInt(lunarCalendarString?.slice(0, 4)))
-  // 农历月
-  const month = lunarCalendarString?.slice(5, monthIndex + 1)?.replace('十一', '冬')
-  // 农历日
-  const day = lunarDayDic[Number.parseInt(lunarCalendarString?.slice(monthIndex + 1, lunarCalendarString?.indexOf(' '))) - 1]
+  // 获取农历信息
+  const lunarInfo = lunisolar.query(new Date(d))
+  const year = `${lunarInfo?.lunar.year}年`
+  const rawMonth = lunarInfo?.lunar.month ?? '';
+  const month = rawMonth.replace('十一', '冬').replace('十二', '腊');
+  const day = lunarInfo?.lunar.date ?? ''
   // 季节
   const season = lunarMonthToSeason(month)
+  // 节气
+  const solarTerm =  lunarInfo?.solarTerm
   // 月日
-  const date = month + day
+  const monthDay = month + day
   return { 
     year, 
     month, 
     day, 
-    season, 
-    date 
+    season,
+    solarTerm,
+    monthDay 
   }
-}
-
-/**
- * 农历年份转干支纪年
- * @param year 农历年份
- * @returns 干支纪年
- */
-function sexagenaryCycleYear(year: number): string {
-  // 天干
-  const heavenlyStemMap = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
-  // 地支
-  const earthlyBranchMap = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
-
-  // 基数
-  const radix = year - 3
-  // 公元年数先减三，除10余数是天干，基数改用12除，余数便是地支年, 若得0为1之前，即最后一个
-  const heavenlyStemRadix = radix % 10
-  const earthlyBranchRadix = radix % 12
-
-  const heavenlyStem = heavenlyStemMap[heavenlyStemRadix === 0 ? 9 : heavenlyStemRadix - 1]
-  const earthlyBranch = earthlyBranchMap[earthlyBranchRadix === 0 ? 11 : earthlyBranchRadix - 1]
-
-  return `${heavenlyStem + earthlyBranch}年`
 }
 
 function lunarMonthToSeason(m: string): string {

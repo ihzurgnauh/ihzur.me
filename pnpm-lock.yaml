@@ -155,6 +155,9 @@ catalogs:
     shiki:
       specifier: ^3.19.0
       version: 3.19.0
+    tinylunar:
+      specifier: ^1.0.0-beta.4
+      version: 1.0.0-beta.4
     vue:
       specifier: ^3.5.25
       version: 3.5.25
@@ -224,6 +227,9 @@ importers:
       shiki:
         specifier: catalog:frontend
         version: 3.19.0
+      tinylunar:
+        specifier: catalog:frontend
+        version: 1.0.0-beta.4
       vue:
         specifier: catalog:frontend
         version: 3.5.25(typescript@5.9.3)
@@ -2359,6 +2365,10 @@ packages:
   tinyglobby@0.2.15:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
+
+  tinylunar@1.0.0-beta.4:
+    resolution: {integrity: sha512-qnYP3P/15dF+0pyijuKKAwxeXxMRjkLUIvkx3LNgukhqUrz85sno4tIdz4yFvc0lZe0QJJPp6mWOWIaQyi9huA==}
+    engines: {node: '>=16.0.0'}
 
   tldts-core@7.0.17:
     resolution: {integrity: sha512-DieYoGrP78PWKsrXr8MZwtQ7GLCUeLxihtjC1jZsW1DnvSMdKPitJSe8OSYDM2u5H6g3kWJZpePqkp43TfLh0g==}
@@ -4692,6 +4702,8 @@ snapshots:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
+
+  tinylunar@1.0.0-beta.4: {}
 
   tldts-core@7.0.17: {}
 

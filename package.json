@@ -13,6 +13,7 @@
     "@vueuse/core": "catalog:frontend",
     "@unocss/reset": "catalog:frontend",
     "dayjs": "catalog:frontend",
+    "tinylunar": "catalog:frontend",
     "floating-vue": "catalog:frontend",
     "livephotoskit": "catalog:frontend",
     "nprogress": "catalog:frontend",

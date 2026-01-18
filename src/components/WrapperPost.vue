@@ -103,7 +103,7 @@ const BgComponent = computed(() => {
       v-if="frontmatter.date"
       class="opacity-50 !-mt-6 slide-enter-50"
     >
-      {{ formatDate(frontmatter.date, false) }} {{ lunarCalendar(frontmatter.date).season }}
+      {{ formatDate(frontmatter.date, false) }} {{ lunarCalendar(frontmatter.date).season }} {{lunarCalendar(frontmatter.date).solarTerm}}
     </p>
     <p
       v-if="frontmatter.subtitle"

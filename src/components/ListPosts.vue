@@ -99,7 +99,7 @@ function getGroupName(p: Post) {
               />
 
               <span text-sm op50 ws-nowrap>
-                {{ lunarCalendar(route.date).date }}
+                {{ lunarCalendar(route.date).monthDay }}
               </span>
               <!-- <span v-if="route.duration" text-sm op40 ws-nowrap>· {{ route.duration }}</span> -->
               <span

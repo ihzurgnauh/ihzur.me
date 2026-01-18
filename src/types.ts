@@ -25,6 +25,7 @@ export interface LunarDate {
   month: string;
   day: string;
   season?: string;
-  date: string;
+  solarTerm?: string;
+  monthDay: string;
 }
 
