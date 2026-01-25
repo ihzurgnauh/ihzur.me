@@ -37,6 +37,7 @@
     "@types/markdown-it-link-attributes": "catalog:types",
     "@types/nprogress": "catalog:types",
     "@types/prompts": "catalog:types",
+    "@types/node": "catalog:types",
     "@vitejs/plugin-vue": "catalog:build",
     "@unpic/placeholder": "catalog:frontend",
     "blurhash": "catalog:dev",
