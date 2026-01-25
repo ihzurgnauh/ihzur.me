@@ -21,8 +21,8 @@ const routes: Post[] = router.getRoutes()
     redirect: i.meta.frontmatter.redirect,
   }))
   
-const posts = computed(() =>
-  [...(props.posts || routes), ...props.extra || []]
+const posts = computed<Post[]>(() =>
+  [...(props.posts || routes), ...(props.extra || [])]
     .sort((a, b) => +new Date(b.date) - +new Date(a.date)),
 )
 
@@ -49,7 +49,7 @@ function getGroupName(p: Post) {
       </div>
     </template>
 
-    <template v-for="route, idx in posts" :key="route.path">
+    <template v-for="(route, idx) in posts" :key="route.path">
       <div
         v-if="!isSameGroup(route, posts[idx - 1])"
         select-none relative h20 pointer-events-none slide-enter
