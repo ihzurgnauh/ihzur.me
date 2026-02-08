@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import ImagePreview from './components/ImagePreview.vue'
+
 const route = useRoute()
 
 const imageModel = ref<HTMLImageElement>()
 
 useEventListener('click', async (e) => {
+  
+  // Ignore clicks if preview is already open
+  if (imageModel.value) return
+
   const path = Array.from(e.composedPath())
   const first = path[0]
   if (!(first instanceof HTMLElement))
@@ -39,10 +45,5 @@ onKeyStroke('Escape', (e) => {
     <RouterView />
     <Footer :key="route.path" />
   </main>
-  <Transition name="fade">
-    <div v-if="imageModel" fixed top-0 left-0 right-0 bottom-0 z-500 backdrop-blur-7 @click="imageModel = undefined">
-      <div absolute top-0 left-0 right-0 bottom-0 bg-black:30 z--1 />
-      <img :src="imageModel.src" :alt="imageModel.alt" w-full h-full object-contain>
-    </div>
-  </Transition>
+<ImagePreview v-model="imageModel" />
 </template>
