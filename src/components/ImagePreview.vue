@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import { ref, watch, reactive } from 'vue'
+import { ref, watch, reactive, nextTick } from 'vue'
 
 const props = defineProps<{ modelValue?: HTMLImageElement | null }>()
 const emit = defineEmits(['update:modelValue'])
 
-// Lifecycle and transition states
-const isRendered = ref(false)     // Mount state
-const isActive = ref(false)       // Visible state
+// Lifecycle and visibility states
+const isRendered = ref(false)
+const isActive = ref(false)
 const internalSrc = ref('')
 const sourceEl = ref<HTMLImageElement | null>(null)
 
-// Zoom and pan state
+// Interaction state (s: scale, x/y: translate)
 const z = reactive({ s: 1, x: 0, y: 0, d: false, st: { x: 0, y: 0 } })
 const resetZoom = () => { z.s = 1; z.x = 0; z.y = 0; }
 
 /**
- * Update scale and translation based on focal point
+ * Focal-point zooming logic
  */
 const applyZoom = (newScale: number, centerX: number, centerY: number) => {
   const vW = window.innerWidth, vH = window.innerHeight
   const relX = centerX - vW / 2, relY = centerY - vH / 2
   const ratio = newScale / z.s
-  // Fixed variable name from 'zoom' to 'z'
   z.x = relX - (relX - z.x) * ratio
   z.y = relY - (relY - z.y) * ratio
   z.s = newScale
@@ -29,7 +28,7 @@ const applyZoom = (newScale: number, centerX: number, centerY: number) => {
 }
 
 /**
- * Entry transition: thumbnail -> preview
+ * Transition: Entry
  */
 const handleOpen = (el: HTMLImageElement) => {
   sourceEl.value = el
@@ -42,18 +41,19 @@ const handleOpen = (el: HTMLImageElement) => {
     return
   }
 
-  // Tag source element for snapshot
+  // Tag source for snapshot
   el.style.viewTransitionName = 'vp-image'
 
-  document.startViewTransition(() => {
+  document.startViewTransition(async () => {
     isActive.value = true
-    // Handover name to the preview image entity
+    // Handover name to the entity
     el.style.viewTransitionName = ''
+    await nextTick()
   })
 }
 
 /**
- * Exit transition: preview -> thumbnail
+ * Transition: Exit
  */
 const handleClose = async () => {
   if (!isActive.value) return
@@ -65,16 +65,17 @@ const handleClose = async () => {
     return
   }
 
-  const transition = document.startViewTransition(() => {
+  const transition = document.startViewTransition(async () => {
     isActive.value = false
-    // Claim name back for return flight path
+    resetZoom()
+    // Re-assign name back to source
     if (sourceEl.value) sourceEl.value.style.viewTransitionName = 'vp-image'
+    await nextTick()
   })
 
   try {
     await transition.finished
   } finally {
-    // Cleanup names to prevent collisions
     if (sourceEl.value) sourceEl.value.style.viewTransitionName = ''
     isRendered.value = false
     emit('update:modelValue', null)
@@ -97,20 +98,20 @@ watch(() => props.modelValue, (v) => {
       @mouseup="z.d = false"
       @mouseleave="z.d = false"
     >
-      <!-- Background backdrop -->
+      <!-- Backdrop layer: Isolated from root for zero-latency blur -->
       <div 
-        class="absolute inset-0 bg-black/90 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-        :class="isActive ? 'opacity-100 backdrop-blur-md' : 'opacity-0 backdrop-blur-none'"
+        class="absolute inset-0 bg-transparent vp-backdrop"
+        :class="isActive ? 'vp-backdrop-active' : ''"
         @click="handleClose"
       />
 
-      <!-- Content layer -->
+      <!-- Content wrapper -->
       <div 
         v-if="isActive"
         class="relative transform-gpu will-change-transform"
         :style="{
           transform: `translate3d(${z.x}px, ${z.y}px, 0) scale(${z.s})`,
-          transition: z.d ? 'none' : 'transform 500ms cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: z.d ? 'none' : 'transform 500ms cubic-bezier(0.2, 0, 0, 1)',
           cursor: z.s > 1 ? (z.d ? 'grabbing' : 'grab') : 'zoom-in'
         }"
         @mousedown="z.s > 1 && (z.d = true) && (z.st = { x: $event.clientX - z.x, y: $event.clientY - z.y })"
@@ -128,54 +129,65 @@ watch(() => props.modelValue, (v) => {
 </template>
 
 <style>
-/* View Transition Pseudo-elements (Global) */
+/* Global View Transition styles */
 
 .vp-image-entity {
   view-transition-name: vp-image;
   contain: layout paint;
 }
 
-::view-transition-group(vp-image) {
-  animation-duration: 500ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.vp-backdrop {
+  view-transition-name: vp-backdrop;
 }
 
-::view-transition-image-pair(vp-image) {
+.vp-backdrop-active {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+::view-transition-group(vp-image),
+::view-transition-group(vp-backdrop) {
+  animation-duration: 500ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Layering: ensures image is above the blurred backdrop */
+::view-transition-group(vp-backdrop) { z-index: 2001; }
+::view-transition-group(vp-image) { z-index: 2002; }
+
+::view-transition-image-pair(vp-image),
+::view-transition-image-pair(vp-backdrop) {
   isolation: isolate;
 }
 
-/* Fix sub-pixel jitter during movement */
+/* Geometric locking for stability */
 ::view-transition-old(vp-image),
-::view-transition-new(vp-image) {
+::view-transition-new(vp-image),
+::view-transition-old(vp-backdrop),
+::view-transition-new(vp-backdrop) {
   height: 100% !important;
   width: 100% !important;
-  object-fit: contain !important;
   position: absolute !important;
   inset: 0 !important;
-  margin: auto !important;
   animation: none; 
   mix-blend-mode: normal;
 }
 
-/* Hide old snapshot to ensure clean flight path */
-::view-transition-old(vp-image) {
+::view-transition-new(vp-image),
+::view-transition-new(vp-backdrop) {
+  object-fit: contain !important;
+}
+
+::view-transition-old(vp-image),
+::view-transition-old(vp-backdrop) {
   opacity: 0 !important;
 }
 
-/* Optimize performance by disabling root layer transitions */
+/* Disable root interpolation to avoid dark mode transition conflicts */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
-}
-
-/* Backdrop blur effects */
-.backdrop-blur-md {
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-}
-.backdrop-blur-none {
-  -webkit-backdrop-filter: blur(0px);
-  backdrop-filter: blur(0px);
 }
 </style>
