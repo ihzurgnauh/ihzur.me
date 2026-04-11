@@ -1,5 +1,7 @@
 <script setup lang='ts'>
 import { lunarCalendar, formatDate } from '~/logics'
+import { computed, defineAsyncComponent } from 'vue'
+import { isDark } from '~/logics'
 
 const { frontmatter } = defineProps({
   frontmatter: {
@@ -73,8 +75,17 @@ onMounted(() => {
 const BgComponent = computed(() => {
   let bg = frontmatter.background
   if (bg === 'random') {
-    bg = Math.random() > 0.5 ? 'plum' : 'stars'
+    const bgList = isDark.value ? ['plum', 'stars'] : ['plum', 'dapple']
+    bg = bgList[Math.floor(Math.random() * bgList.length)]
   }
+
+  if (isDark.value && bg === 'dapple') {
+    bg = 'stars'
+  } 
+  else if (!isDark.value && bg === 'stars') {
+    bg = 'dapple'
+  }
+
   if (typeof window !== 'undefined') {
     if (bg === 'plum') {
       return defineAsyncComponent(() => import('./Plum.vue'))
@@ -82,7 +93,11 @@ const BgComponent = computed(() => {
     else if (bg === 'stars') {
       return defineAsyncComponent(() => import('./Stars.vue'))
     }
+    else if (bg === 'dapple') {
+      return defineAsyncComponent(() => import('./DappleLight.vue'))
+    }
   }
+  
   return undefined
 })
 </script>
