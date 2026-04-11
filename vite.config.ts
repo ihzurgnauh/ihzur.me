@@ -45,6 +45,7 @@ export default defineConfig({
       '@vueuse/core',
       'dayjs',
       'dayjs/plugin/localizedFormat',
+      'dayjs/locale/zh-cn' 
     ],
   },
   plugins: [
@@ -83,9 +84,9 @@ export default defineConfig({
       markdownItOptions: {
         quotes: '""\'\'',
       },
-      async markdownItSetup(md) {
+      async markdownItSetup(md: any) {
         md.use(await MarkdownItShiki({
-          themes: {
+          themes: { 
             dark: 'vitesse-dark',
             light: 'vitesse-light',
           },
@@ -128,9 +129,9 @@ export default defineConfig({
         md.use(figure)
         
         // Save default renderer
-        const defaultImageRule = md.renderer.rules.image || ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options))
-        const defaultHtmlBlockRule = md.renderer.rules.html_block || ((tokens, idx) => tokens[idx].content)
-        const defaultHtmlInlineRule = md.renderer.rules.html_inline || ((tokens, idx) => tokens[idx].content)
+        const defaultImageRule = md.renderer.rules.image || ((tokens: any, idx: number, options: any, env: any, self: any) => self.renderToken(tokens, idx, options))
+        const defaultHtmlBlockRule = md.renderer.rules.html_block || ((tokens: any, idx: number) => tokens[idx].content)
+        const defaultHtmlInlineRule = md.renderer.rules.html_inline || ((tokens: any, idx: number) => tokens[idx].content)
 
         const replaceImgWithBlurHash = (content: string) => {
           return content.replace(/<img([^>]+)>/gi, (match, attrs) => {
@@ -148,7 +149,7 @@ export default defineConfig({
           })
         }
 
-        md.renderer.rules.image = (tokens, idx, options, env, self) => {
+        md.renderer.rules.image = (tokens: any, idx: number, options: any, env: any, self: any) => {
           const token = tokens[idx]
           const src = token.attrGet('src') || ''
           const alt = token.content || token.attrGet('alt') || ''
@@ -161,7 +162,7 @@ export default defineConfig({
           return defaultImageRule(tokens, idx, options, env, self)
         }
 
-        md.renderer.rules.html_block = (tokens, idx, options, env, self) => {
+        md.renderer.rules.html_block = (tokens: any, idx: number, options: any, env: any, self: any) => {
           const content = tokens[idx].content
           if (content.includes('<img')) {
             return replaceImgWithBlurHash(content)
@@ -169,7 +170,7 @@ export default defineConfig({
           return defaultHtmlBlockRule(tokens, idx, options, env, self)
         }
 
-        md.renderer.rules.html_inline = (tokens, idx, options, env, self) => {
+        md.renderer.rules.html_inline = (tokens: any, idx: number, options: any, env: any, self: any) => {
           const content = tokens[idx].content
           if (content.includes('<img')) {
             return replaceImgWithBlurHash(content)
