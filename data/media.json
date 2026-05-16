@@ -197,6 +197,13 @@
             "date": "1994",
             "state": "todo",
             "lang": "zh"
+        },
+        {
+            "name": "纯真年代的爱情",
+            "author": "陈畅",
+            "date": "2026",
+            "state": "done",
+            "lang": "zh"
         }
     ]
 }
