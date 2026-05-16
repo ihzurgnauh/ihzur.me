@@ -1,49 +1,102 @@
 <script setup lang="ts">
-import ImagePreview from './components/ImagePreview.vue'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const imageModel = ref<HTMLImageElement>()
+const active = ref(false)
+const activeImg = ref<HTMLImageElement | null>(null)
 
-useEventListener('click', async (e) => {
-  
-  // Ignore clicks if preview is already open
-  if (imageModel.value) return
+const vtName = 'astro-image'
 
-  const path = Array.from(e.composedPath())
+const supportsVT = () => 'startViewTransition' in document
+
+// 锁定 blurhash wrapper 尺寸，防止 img position:fixed 后塌陷
+const lockWrapper = (el: HTMLImageElement) => {
+  const wrapper = el.closest('.blur-image-wrapper') as HTMLElement | null
+  if (!wrapper) return
+  const { width, height } = wrapper.getBoundingClientRect()
+  wrapper.style.width = width + 'px'
+  wrapper.style.height = height + 'px'
+}
+
+const unlockWrapper = (el: HTMLImageElement) => {
+  const wrapper = el.closest('.blur-image-wrapper') as HTMLElement | null
+  if (!wrapper) return
+  wrapper.style.width = ''
+  wrapper.style.height = ''
+}
+
+const openPreview = (el: HTMLImageElement) => {
+  if (!el) return
+
+  activeImg.value = el
+  el.style.viewTransitionName = vtName
+
+  const run = () => {
+    lockWrapper(el)
+    active.value = true
+    el.classList.add('vt-active')
+  }
+
+  if (!supportsVT()) return run()
+
+  document.startViewTransition(run)
+}
+
+const closePreview = () => {
+  const el = activeImg.value
+  if (!el) return
+
+  el.style.viewTransitionName = vtName
+
+  const run = () => {
+    active.value = false
+    el.classList.remove('vt-active')
+  }
+
+  const vt = supportsVT()
+    ? document.startViewTransition(run)
+    : { finished: Promise.resolve() }
+
+  vt.finished.then(() => {
+    unlockWrapper(el)
+    el.style.viewTransitionName = ''
+    activeImg.value = null
+  })
+}
+
+useEventListener('click', (e) => {
+  if (active.value) return
+
+  const path = e.composedPath()
   const first = path[0]
-  if (!(first instanceof HTMLElement))
-    return
-  if (first.tagName !== 'IMG')
-    return
-  if (path.some(el => el instanceof HTMLElement && ['A', 'BUTTON'].includes(el.tagName)))
-    return
-  if (!path.some(el => el instanceof HTMLElement && el.classList.contains('prose')))
-    return
 
-  // Do not open image when they are moving. Mainly for mobile to avoid conflict with hovering behavior.
-  const pos = first.getBoundingClientRect()
-  await new Promise(resolve => setTimeout(resolve, 50))
-  const newPos = first.getBoundingClientRect()
-  if (pos.left !== newPos.left || pos.top !== newPos.top)
-    return
+  if (!(first instanceof HTMLImageElement)) return
 
-  imageModel.value = first as HTMLImageElement
+  if (path.some(el => el instanceof HTMLElement && ['A', 'BUTTON'].includes(el.tagName))) return
+
+  if (!path.some(el => el instanceof HTMLElement && el.classList.contains('prose'))) return
+
+  openPreview(first)
 })
 
-onKeyStroke('Escape', (e) => {
-  if (imageModel.value) {
-    imageModel.value = undefined
-    e.preventDefault()
-  }
+onKeyStroke('Escape', () => {
+  if (active.value) closePreview()
 })
 </script>
 
 <template>
   <NavBar />
+
   <main class="px-7 py-10 of-x-hidden">
     <RouterView />
     <Footer :key="route.path" />
   </main>
-<ImagePreview v-model="imageModel" />
+
+  <div
+    v-if="active"
+    class="fixed inset-0 z-[9997] bg-black/70"
+    @click="closePreview"
+  />
 </template>
