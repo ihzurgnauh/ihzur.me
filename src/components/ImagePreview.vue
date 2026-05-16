@@ -4,19 +4,14 @@ import { ref, watch, reactive, nextTick } from 'vue'
 const props = defineProps<{ modelValue?: HTMLImageElement | null }>()
 const emit = defineEmits(['update:modelValue'])
 
-// Lifecycle and visibility states
 const isRendered = ref(false)
 const isActive = ref(false)
 const internalSrc = ref('')
 const sourceEl = ref<HTMLImageElement | null>(null)
 
-// Interaction state (s: scale, x/y: translate)
 const z = reactive({ s: 1, x: 0, y: 0, d: false, st: { x: 0, y: 0 } })
-const resetZoom = () => { z.s = 1; z.x = 0; z.y = 0; }
+const resetZoom = () => { z.s = 1; z.x = 0; z.y = 0 }
 
-/**
- * Focal-point zooming logic
- */
 const applyZoom = (newScale: number, centerX: number, centerY: number) => {
   const vW = window.innerWidth, vH = window.innerHeight
   const relX = centerX - vW / 2, relY = centerY - vH / 2
@@ -27,50 +22,47 @@ const applyZoom = (newScale: number, centerX: number, centerY: number) => {
   if (z.s <= 1.01) resetZoom()
 }
 
-/**
- * Transition: Entry
- */
+const hasVT = () => 'startViewTransition' in document
+const canTransition = (el: HTMLElement) => hasVT() && el.isConnected
+
 const handleOpen = (el: HTMLImageElement) => {
   sourceEl.value = el
   internalSrc.value = el.src
   resetZoom()
   isRendered.value = true
 
-  if (!document.startViewTransition) {
+  if (!canTransition(el)) {
     isActive.value = true
     return
   }
 
-  // Tag source for snapshot
   el.style.viewTransitionName = 'vp-image'
+  void el.offsetWidth // commit the name so the browser snapshots it
 
   document.startViewTransition(async () => {
     isActive.value = true
-    // Handover name to the entity
     el.style.viewTransitionName = ''
     await nextTick()
   })
 }
 
-/**
- * Transition: Exit
- */
 const handleClose = async () => {
   if (!isActive.value) return
 
-  if (!document.startViewTransition) {
+  if (!sourceEl.value || !canTransition(sourceEl.value)) {
     isActive.value = false
     isRendered.value = false
     emit('update:modelValue', null)
     return
   }
 
+  // Old state: only the preview overlay has vp-image.
+  // We tag the source inside the callback so it only appears in the new state.
   const transition = document.startViewTransition(async () => {
     isActive.value = false
     resetZoom()
-    // Re-assign name back to source
-    if (sourceEl.value) sourceEl.value.style.viewTransitionName = 'vp-image'
     await nextTick()
+    sourceEl.value!.style.viewTransitionName = 'vp-image'
   })
 
   try {
@@ -90,7 +82,7 @@ watch(() => props.modelValue, (v) => {
 
 <template>
   <Teleport to="body">
-    <div 
+    <div
       v-if="isRendered"
       class="fixed inset-0 z-[2000] flex items-center justify-center overflow-hidden touch-none select-none pointer-events-auto"
       @wheel.prevent="applyZoom(Math.min(Math.max(z.s * ($event.deltaY < 0 ? 1.25 : 0.8), 1), 10), $event.clientX, $event.clientY)"
@@ -98,29 +90,27 @@ watch(() => props.modelValue, (v) => {
       @mouseup="z.d = false"
       @mouseleave="z.d = false"
     >
-      <!-- Backdrop layer: Isolated from root for zero-latency blur -->
-      <div 
-        class="absolute inset-0 bg-transparent vp-backdrop"
-        :class="isActive ? 'vp-backdrop-active' : ''"
+      <!-- Opacity-only transition: backdrop-blur is static to avoid GPU thrashing -->
+      <div
+        class="absolute inset-0 transition-opacity duration-300 bg-black/50 dark:bg-black/70"
+        :class="isActive ? 'opacity-100 backdrop-blur-md' : 'opacity-0'"
         @click="handleClose"
       />
 
-      <!-- Content wrapper -->
-      <div 
+      <div
         v-if="isActive"
         class="relative transform-gpu will-change-transform"
         :style="{
           transform: `translate3d(${z.x}px, ${z.y}px, 0) scale(${z.s})`,
-          transition: z.d ? 'none' : 'transform 500ms cubic-bezier(0.2, 0, 0, 1)',
+          transition: z.d ? 'none' : 'transform 400ms cubic-bezier(0.2, 0, 0, 1)',
           cursor: z.s > 1 ? (z.d ? 'grabbing' : 'grab') : 'zoom-in'
         }"
         @mousedown="z.s > 1 && (z.d = true) && (z.st = { x: $event.clientX - z.x, y: $event.clientY - z.y })"
         @dblclick="applyZoom(z.s > 1.1 ? 1 : 3, $event.clientX, $event.clientY)"
       >
-        <img 
-          :src="internalSrc" 
+        <img
+          :src="internalSrc"
           draggable="false"
-          decoding="async"
           class="max-w-[95vw] max-h-[92vh] object-contain shadow-2xl rounded-sm vp-image-entity"
         >
       </div>
@@ -129,62 +119,16 @@ watch(() => props.modelValue, (v) => {
 </template>
 
 <style>
-/* Global View Transition styles */
-
 .vp-image-entity {
   view-transition-name: vp-image;
   contain: layout paint;
 }
 
-.vp-backdrop {
-  view-transition-name: vp-backdrop;
-}
-
-.vp-backdrop-active {
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-::view-transition-group(vp-image),
-::view-transition-group(vp-backdrop) {
-  animation-duration: 500ms;
+::view-transition-group(vp-image) {
+  animation-duration: 300ms;
   animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Layering: ensures image is above the blurred backdrop */
-::view-transition-group(vp-backdrop) { z-index: 2001; }
-::view-transition-group(vp-image) { z-index: 2002; }
-
-::view-transition-image-pair(vp-image),
-::view-transition-image-pair(vp-backdrop) {
-  isolation: isolate;
-}
-
-/* Geometric locking for stability */
-::view-transition-old(vp-image),
-::view-transition-new(vp-image),
-::view-transition-old(vp-backdrop),
-::view-transition-new(vp-backdrop) {
-  height: 100% !important;
-  width: 100% !important;
-  position: absolute !important;
-  inset: 0 !important;
-  animation: none; 
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(vp-image),
-::view-transition-new(vp-backdrop) {
-  object-fit: contain !important;
-}
-
-::view-transition-old(vp-image),
-::view-transition-old(vp-backdrop) {
-  opacity: 0 !important;
-}
-
-/* Disable root interpolation to avoid dark mode transition conflicts */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
