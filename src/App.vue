@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -7,52 +7,58 @@ const route = useRoute()
 const active = ref(false)
 const activeImg = ref<HTMLImageElement | null>(null)
 
-const vtName = 'astro-image'
+const vtName = 'image-preview'
 
-const supportsVT = () => 'startViewTransition' in document
+const supportsVT = () =>
+  typeof window !== 'undefined'
+  && 'startViewTransition' in document
 
-// 锁定 blurhash wrapper 尺寸，防止 img position:fixed 后塌陷
-const lockWrapper = (el: HTMLImageElement) => {
-  const wrapper = el.closest('.blur-image-wrapper') as HTMLElement | null
-  if (!wrapper) return
-  const { width, height } = wrapper.getBoundingClientRect()
-  wrapper.style.width = width + 'px'
-  wrapper.style.height = height + 'px'
-}
-
-const unlockWrapper = (el: HTMLImageElement) => {
-  const wrapper = el.closest('.blur-image-wrapper') as HTMLElement | null
-  if (!wrapper) return
-  wrapper.style.width = ''
-  wrapper.style.height = ''
-}
-
+// Open preview
 const openPreview = (el: HTMLImageElement) => {
-  if (!el) return
+  if (!el || activeImg.value)
+    return
 
-  activeImg.value = el
+  // Assign transition name
   el.style.viewTransitionName = vtName
 
-  const run = () => {
-    lockWrapper(el)
+  const run = async () => {
     active.value = true
-    el.classList.add('vt-active')
+    activeImg.value = el
+
+    // Hide original image but keep space to prevent layout shift
+    el.style.visibility = 'hidden'
+    // Pass transition name to modal image
+    el.style.viewTransitionName = ''
+
+    // Wait for DOM update
+    await nextTick()
   }
 
-  if (!supportsVT()) return run()
+  if (!supportsVT()) {
+    run()
+    return
+  }
 
   document.startViewTransition(run)
 }
 
+// Close preview
 const closePreview = () => {
   const el = activeImg.value
-  if (!el) return
 
-  el.style.viewTransitionName = vtName
+  if (!el)
+    return
 
-  const run = () => {
+  const run = async () => {
     active.value = false
-    el.classList.remove('vt-active')
+
+    // Restore visibility
+    el.style.visibility = ''
+    // Restore transition name for reverse animation
+    el.style.viewTransitionName = vtName
+
+    // Wait for DOM update
+    await nextTick()
   }
 
   const vt = supportsVT()
@@ -60,29 +66,56 @@ const closePreview = () => {
     : { finished: Promise.resolve() }
 
   vt.finished.then(() => {
-    unlockWrapper(el)
+    // Clean up
     el.style.viewTransitionName = ''
     activeImg.value = null
   })
 }
 
+// Global image click
 useEventListener('click', (e) => {
-  if (active.value) return
+  if (active.value)
+    return
 
   const path = e.composedPath()
-  const first = path[0]
 
-  if (!(first instanceof HTMLImageElement)) return
+  const img = path.find(
+    (el): el is HTMLImageElement =>
+      el instanceof HTMLImageElement,
+  )
 
-  if (path.some(el => el instanceof HTMLElement && ['A', 'BUTTON'].includes(el.tagName))) return
+  if (!img)
+    return
 
-  if (!path.some(el => el instanceof HTMLElement && el.classList.contains('prose'))) return
+  // Exclude links/buttons
+  if (
+    path.some(
+      el =>
+        el instanceof HTMLElement
+        && ['A', 'BUTTON'].includes(el.tagName),
+    )
+  ) {
+    return
+  }
 
-  openPreview(first)
+  // Only prose area
+  if (
+    !path.some(
+      el =>
+        el instanceof HTMLElement
+        && el.classList.contains('prose'),
+    )
+  ) {
+    return
+  }
+
+  openPreview(img)
 })
 
+// ESC
 onKeyStroke('Escape', () => {
-  if (active.value) closePreview()
+  if (active.value)
+    closePreview()
 })
 </script>
 
@@ -94,9 +127,18 @@ onKeyStroke('Escape', () => {
     <Footer :key="route.path" />
   </main>
 
+  <!-- Preview backdrop -->
   <div
     v-if="active"
-    class="fixed inset-0 z-[9997] bg-black/70"
+    class="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-sm flex items-center justify-center cursor-zoom-out"
     @click="closePreview"
-  />
+  >
+    <!-- Modal image -->
+    <img
+      v-if="activeImg"
+      :src="activeImg.src"
+      class="max-w-[90vw] max-h-[90vh] object-contain z-[9999]"
+      style="view-transition-name: image-preview;"
+    />
+  </div>
 </template>
