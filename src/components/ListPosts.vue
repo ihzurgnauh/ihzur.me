@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router/auto'
+import { useRouter } from 'vue-router'
 import { lunarCalendar } from '~/logics'
 import type { Post } from '~/types'
 

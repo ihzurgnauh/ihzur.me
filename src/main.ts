@@ -24,14 +24,12 @@ export const createApp = ViteSSG(
   {
     routes,
   },
-  ({ router, app, isClient }) => {
+  ({ router, app }) => {
     dayjs.extend(LocalizedFormat)
 
     app.use(FloatingVue)
     app.use(VueVirtualWaterfall)
-    
-    if (isClient) {
-      
+    if (!import.meta.env.SSR) {
       // Bypass Vite's build analysis
       const script = document.createElement('script')
       script.type = 'module'
@@ -48,17 +46,18 @@ export const createApp = ViteSSG(
             if (ctx.savedPosition?.top || import.meta.hot) {
               html.classList.add('no-sliding')
             } else {
-              html.classList.remove('no-sliding') 
+              html.classList.remove('no-sliding')
             }
             return true
           },
         },
         behavior: 'auto',
       })
-
+      
       router.beforeEach(() => {
         NProgress.start()
       })
+
       router.afterEach(() => {
         NProgress.done()
       })
