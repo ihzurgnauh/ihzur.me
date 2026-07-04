@@ -72,33 +72,27 @@ onMounted(() => {
   }, 1)
 })
 
-const BgComponent = computed(() => {
-  let bg = frontmatter.background
+// Lazy-loaded background components to reduce initial bundle size
+const bgComponentMap = {
+  plum: defineAsyncComponent(() => import('./Plum.vue')),
+  stars: defineAsyncComponent(() => import('./Stars.vue')),
+  dapple: defineAsyncComponent(() => import('./DappleLight.vue')),
+}
+
+// Resolve background key; 'random' picks once at init to avoid flickering across navigations
+const bgKey = (() => {
+  const bg = frontmatter.background
   if (bg === 'random') {
-    const bgList = isDark.value ? ['plum', 'stars'] : ['plum', 'dapple']
-    bg = bgList[Math.floor(Math.random() * bgList.length)]
+    const keys = Object.keys(bgComponentMap)
+    return keys[Math.floor(Math.random() * keys.length)]
   }
+  return bg
+})()
 
-  if (isDark.value && bg === 'dapple') {
-    bg = 'stars'
-  } 
-  else if (!isDark.value && bg === 'stars') {
-    bg = 'dapple'
-  }
-
-  if (typeof window !== 'undefined') {
-    if (bg === 'plum') {
-      return defineAsyncComponent(() => import('./Plum.vue'))
-    }
-    else if (bg === 'stars') {
-      return defineAsyncComponent(() => import('./Stars.vue'))
-    }
-    else if (bg === 'dapple') {
-      return defineAsyncComponent(() => import('./DappleLight.vue'))
-    }
-  }
-  
-  return undefined
+// Skip background during SSR to avoid hydration mismatch
+const BgComponent = computed(() => {
+  if (import.meta.env.SSR) return undefined
+  return bgComponentMap[bgKey as keyof typeof bgComponentMap] ?? undefined
 })
 </script>
 
