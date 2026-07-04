@@ -20,9 +20,9 @@ import type {
 
 declare module 'vue-router' {
   interface TypesConfig {
-    ParamParsers:
-      | never
+    _ParamParsers: {}
     RouteNamedMap: import('vue-router/auto-routes').RouteNamedMap
+    _RouteFileInfoMap: import('vue-router/auto-routes')._RouteFileInfoMap
   }
 }
 
@@ -147,17 +147,23 @@ declare module 'vue-router/auto-routes' {
         | '/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/[...404].md': {
       routes:
         | '/[...404]'
       views:
         | never
+      pathParamNames:
+        | '404'
     }
     'pages/media.md': {
       routes:
         | '/media'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'pages/notes/index.md': {
@@ -165,11 +171,15 @@ declare module 'vue-router/auto-routes' {
         | '/notes/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/notes/hugo-build-static-blog.md': {
       routes:
         | '/notes/hugo-build-static-blog'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'pages/notes/setting-node-environment-in-ubuntu.md': {
@@ -177,11 +187,15 @@ declare module 'vue-router/auto-routes' {
         | '/notes/setting-node-environment-in-ubuntu'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/posts/index.md': {
       routes:
         | '/posts/'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'pages/posts/meet-in-zhaoqing.md': {
@@ -189,11 +203,15 @@ declare module 'vue-router/auto-routes' {
         | '/posts/meet-in-zhaoqing'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/posts/memories-and-nostalgia.md': {
       routes:
         | '/posts/memories-and-nostalgia'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'pages/posts/memories-live-forever.md': {
@@ -201,11 +219,15 @@ declare module 'vue-router/auto-routes' {
         | '/posts/memories-live-forever'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/posts/miss-unseen.md': {
       routes:
         | '/posts/miss-unseen'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'pages/posts/traces-of-utility-pole.md': {
@@ -213,17 +235,23 @@ declare module 'vue-router/auto-routes' {
         | '/posts/traces-of-utility-pole'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/posts/yearning-as-wall.md': {
       routes:
         | '/posts/yearning-as-wall'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'pages/strange-thinkings.md': {
       routes:
         | '/strange-thinkings'
       views:
+        | never
+      pathParamNames:
         | never
     }
   }
