@@ -1,10 +1,10 @@
 {
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@11.10.0",
   "scripts": {
     "gen:blurhash": "tsx ./scripts/gen-blurhash.ts",
-    "build": "npm run gen:blurhash && cross-env NODE_ENV=production vite-ssg build && tsx ./scripts/rss.ts",
+    "build": "pnpm run gen:blurhash && cross-env NODE_ENV=production vite-ssg build && tsx ./scripts/rss.ts",
     "dev": "vite --port 3333 --open",
     "preview": "vite preview"
   },
